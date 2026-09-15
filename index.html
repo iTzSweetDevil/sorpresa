@@ -1,1940 +1,2401 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<title>Una piccola sorpresa per te ❤️</title>
-
-<style>
-
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-
-body{
-    margin:0;
-    min-height:100vh;
-    background:#120f16;
-    color:#fff;
-    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.screen{
-    width:100%;
-    max-width:520px;
-    min-height:100vh;
-    padding:22px 16px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
-
-.card{
-    background:linear-gradient(145deg,#241b29,#17131c);
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:24px;
-    padding:28px 20px;
-    text-align:center;
-    box-shadow:0 20px 60px rgba(0,0,0,.45);
-}
-
-h1{
-    font-size:28px;
-    margin:0 0 14px;
-}
-
-p{
-    line-height:1.55;
-    color:#ddd;
-}
-
-.divider{
-    height:1px;
-    background:rgba(255,255,255,.12);
-    margin:22px 0;
-}
-
-button.main{
-    width:100%;
-    border:0;
-    border-radius:16px;
-    padding:16px 18px;
-    font-size:17px;
-    font-weight:700;
-    color:#fff;
-    background:#9b5de5;
-    box-shadow:0 8px 24px rgba(155,93,229,.25);
-    cursor:pointer;
-}
-
-
-/* =========================
-   SCHERMATA GIOCO
-========================= */
-
-#gameScreen{
-    display:none;
-    justify-content:flex-start;
-    padding-top:24px;
-}
-
-.gameTitle{
-    text-align:center;
-    margin-bottom:14px;
-}
-
-.gameTitle h2{
-    margin:0 0 7px;
-    font-size:24px;
-}
-
-.gameTitle p{
-    margin:0;
-    font-size:14px;
-}
-
-
-/* =========================
-   FOTO STANZA CON ZOOM
-========================= */
-
-.room{
-    position:relative;
-    width:100%;
-    overflow:hidden;
-    border-radius:20px;
-    box-shadow:0 15px 45px rgba(0,0,0,.5);
-    background:#222;
-}
-
-.room img{
-    display:block;
-    width:100%;
-    height:auto;
-    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-    transform-origin: 55% 58%;
-}
-
-.room img.zoomed{
-    transform: scale(2.8);
-}
-
-
-/* =========================
-   HOTSPOT
-========================= */
-
-.hotspot{
-    position:absolute;
-    border:0;
-    background:transparent;
-    padding:0;
-    cursor:pointer;
-    border-radius:18px;
-    z-index:5;
-}
-
-
-/* =========================
-   ICONE HOTSPOT
-========================= */
-
-#pictureHotspot::before,
-#nightstandHotspot::before,
-#bedHotspot::before{
-
-    content:"👀";
-
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    width:38px;
-    height:38px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:23px;
-
-    background:rgba(20,15,25,.82);
-
-    border:2px solid rgba(255,255,255,.85);
-
-    border-radius:50%;
-
-    box-shadow:
-        0 0 0 5px rgba(20,15,25,.22),
-        0 0 18px rgba(255,255,255,.75),
-        0 5px 15px rgba(0,0,0,.65);
-
-    animation:pictureHint 1.4s infinite ease-in-out;
-}
-
-
-@keyframes pictureHint{
-
-    0%,100%{
-        transform:translate(-50%,-50%) scale(1);
-        opacity:1;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Il tesoro segreto di Zoro</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    50%{
-        transform:translate(-50%,-50%) scale(1.13);
-        opacity:.82;
-    }
-}
-
-
-/* =========================
-   POSIZIONI
-========================= */
-
-#pictureHotspot{
-    left:29%;
-    top:15%;
-    width:14%;
-    height:13%;
-}
-
-#nightstandHotspot{
-    left:0%;
-    top:33%;
-    width:22%;
-    height:18%;
-}
-
-#bedHotspot{
-    left:10%;
-    top:55%;
-    width:78%;
-    height:12%;
-    display:none;
-}
-
-
-/* animazione comparsa letto */
-
-#bedHotspot.reveal::before{
-    animation:
-        pictureHint 1.4s infinite ease-in-out,
-        bedReveal .5s ease;
-}
-
-
-@keyframes bedReveal{
-
-    0%{
-        opacity:0;
-        transform:translate(-50%,-50%) scale(.5);
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #08070a;
+      color: #fff;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    100%{
-        opacity:1;
-        transform:translate(-50%,-50%) scale(1);
-    }
-}
-
-
-/* =========================
-   MESSAGGIO SULLA FOTO
-========================= */
-
-.photoMessage{
-    position:absolute;
-
-    left:50%;
-    top:30%;
-
-    transform:translate(-50%,-50%) scale(.82);
-
-    width:86%;
-
-    padding:17px 16px;
-
-    background:rgba(20,15,25,.93);
-
-    border:1px solid rgba(255,255,255,.22);
-
-    border-radius:20px;
-
-    text-align:center;
-
-    z-index:30;
-
-    box-shadow:
-        0 12px 35px rgba(0,0,0,.55),
-        0 0 25px rgba(155,93,229,.18);
-
-    opacity:0;
-
-    pointer-events:none;
-
-    backdrop-filter:blur(5px);
-
-    -webkit-backdrop-filter:blur(5px);
-}
-
-.photoMessage.show{
-    animation:photoMessageIn 4.5s ease forwards;
-}
-
-.photoMessage .emoji{
-    font-size:34px;
-    line-height:1;
-    margin-bottom:9px;
-}
-
-.photoMessage .text{
-    font-size:15px;
-    line-height:1.45;
-    color:#eee;
-}
-
-.photoMessage .text b{
-    color:#fff;
-    font-size:16px;
-}
-
-@keyframes photoMessageIn{
-
-    0%{
-        opacity:0;
-        transform:translate(-50%,-50%) scale(.82);
+    /* FENDENTE DI SPADA DI ZORO */
+    #zoroSlashOverlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
     }
 
-    10%{
-        opacity:1;
-        transform:translate(-50%,-50%) scale(1);
+    #zoroSlashOverlay.slashing {
+      animation: slashAnim 0.45s ease-out forwards;
     }
 
-    85%{
-        opacity:1;
-        transform:translate(-50%,-50%) scale(1);
+    .slashBlade {
+      position: absolute;
+      top: 50%;
+      left: -20%;
+      width: 140%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #2ecc71, #fff, #2ecc71, transparent);
+      box-shadow: 0 0 25px #2ecc71, 0 0 50px #27ae60;
+      transform: translateY(-50%) rotate(-32deg) scaleX(0);
+      transform-origin: center;
     }
 
-    100%{
-        opacity:0;
-        transform:translate(-50%,-50%) scale(.96);
-    }
-}
-
-
-/* =========================
-   REGALO SOTTO IL LETTO
-========================= */
-
-.gift{
-    position:absolute;
-    z-index:20;
-
-    left:55%;
-    top:57%;
-
-    transform:translate(-50%,-50%) scale(0);
-
-    opacity:0;
-
-    font-size:45px;
-
-    pointer-events:none;
-
-    filter:drop-shadow(0 8px 12px rgba(0,0,0,.8));
-}
-
-.gift.show{
-    animation:giftPopUnderBed .8s cubic-bezier(.175,.885,.32,1.275) forwards;
-}
-
-@keyframes giftPopUnderBed{
-
-    0%{
-        opacity:0;
-        transform:translate(-50%,-50%) scale(0);
+    #zoroSlashOverlay.slashing .slashBlade {
+      animation: bladeCut 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    100%{
-        opacity:1;
-        transform:translate(-50%,-50%) scale(1);
-    }
-}
-
-
-/* =========================================================
-   SECONDO ENIGMA
-========================================================= */
-
-.riddle{
-    display:none;
-
-    margin-top:16px;
-
-    background:linear-gradient(145deg,#241b29,#17131c);
-
-    border:1px solid rgba(255,255,255,.1);
-
-    border-radius:20px;
-
-    padding:22px 18px;
-
-    text-align:center;
-
-    box-shadow:0 15px 40px rgba(0,0,0,.3);
-
-    transition:
-        opacity .8s ease,
-        transform .8s ease;
-}
-
-.riddle h3{
-    margin:0 0 10px;
-    font-size:21px;
-}
-
-.riddleIntro{
-    margin:0 0 18px;
-    color:#ddd;
-    font-size:15px;
-    line-height:1.5;
-}
-
-.answerTitle{
-    font-size:13px;
-    color:#aaa;
-    margin-bottom:9px;
-}
-
-#answerArea{
-    min-height:90px;
-
-    padding:13px;
-
-    border:1px dashed rgba(255,255,255,.25);
-
-    border-radius:16px;
-
-    background:rgba(0,0,0,.18);
-
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-
-    align-content:flex-start;
-    justify-content:center;
-
-    margin-bottom:20px;
-
-    transition:
-        border-color .4s ease,
-        background .4s ease,
-        box-shadow .4s ease,
-        transform .4s ease;
-}
-
-.wordsTitle{
-    font-size:13px;
-    color:#aaa;
-    margin-bottom:10px;
-}
-
-#wordBank{
-    display:flex;
-    flex-wrap:wrap;
-    gap:9px;
-    justify-content:center;
-
-    transition:
-        opacity .7s ease,
-        transform .7s ease;
-}
-
-.word{
-    border:1px solid rgba(255,255,255,.14);
-
-    background:linear-gradient(145deg,#35273c,#241b29);
-
-    color:#fff;
-
-    border-radius:12px;
-
-    padding:11px 13px;
-
-    font-size:14px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    user-select:none;
-    -webkit-user-select:none;
-
-    box-shadow:0 5px 14px rgba(0,0,0,.25);
-
-    transition:
-        transform .15s ease,
-        opacity .15s ease,
-        background .2s ease,
-        box-shadow .3s ease;
-}
-
-.word:active{
-    transform:scale(.94);
-}
-
-#answerArea .word{
-    background:linear-gradient(145deg,#9b5de5,#7541a9);
-
-    border-color:rgba(255,255,255,.18);
-
-    cursor:pointer;
-}
-
-.word.added{
-    animation:wordAdded .25s ease;
-}
-
-@keyframes wordAdded{
-
-    0%{
-        opacity:.3;
-        transform:scale(.8);
+    @keyframes slashAnim {
+      0% { opacity: 0; background: rgba(46, 204, 113, 0); }
+      35% { opacity: 1; background: rgba(46, 204, 113, 0.18); }
+      100% { opacity: 0; background: rgba(0, 0, 0, 0); }
     }
 
-    100%{
-        opacity:1;
-        transform:scale(1);
-    }
-}
-
-
-/* =========================
-   PAROLE CORRETTE
-========================= */
-
-.word.correctFlash{
-
-    animation:
-        correctWordFlash .7s ease forwards;
-
-}
-
-@keyframes correctWordFlash{
-
-    0%{
-        transform:scale(1);
-        box-shadow:0 0 0 rgba(255,100,170,0);
+    @keyframes bladeCut {
+      0% { transform: translateY(-50%) rotate(-32deg) scaleX(0); opacity: 0; }
+      40% { transform: translateY(-50%) rotate(-32deg) scaleX(1); opacity: 1; }
+      100% { transform: translateY(-50%) rotate(-32deg) scaleX(1.1); opacity: 0; }
     }
 
-    45%{
-        transform:scale(1.12);
-        background:linear-gradient(
-            145deg,
-            #d979aa,
-            #9b5de5
-        );
-        box-shadow:
-            0 0 12px rgba(255,120,180,.9),
-            0 0 28px rgba(155,93,229,.7);
+    /* Transizione morbida generale tra schermate */
+    .screen {
+      width: 100%;
+      max-width: 520px;
+      min-height: 100vh;
+      padding: 22px 16px;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
     }
 
-    100%{
-        transform:scale(1);
-        box-shadow:
-            0 0 7px rgba(255,120,180,.3);
+    .screen.active {
+      display: flex !important;
+      animation: screenFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
     }
 
-}
-
-
-/* =========================
-   FEEDBACK
-========================= */
-
-#riddleFeedback{
-    min-height:24px;
-
-    margin-top:14px;
-
-    font-size:14px;
-
-    color:#ccc;
-
-    line-height:1.4;
-}
-
-
-/* =========================================================
-   GRANDE ANIMAZIONE FRASE COMPLETA
-========================================================= */
-
-#sentenceReveal{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:1000;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:22px;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(155,93,229,.22) 0%,
-            rgba(18,15,22,.97) 68%
-        );
-
-    backdrop-filter:blur(0);
-
-    -webkit-backdrop-filter:blur(0);
-
-    opacity:0;
-
-    visibility:hidden;
-
-    pointer-events:none;
-
-    transition:
-        opacity .8s ease,
-        backdrop-filter .8s ease,
-        visibility 0s linear .8s;
-
-}
-
-#sentenceReveal.show{
-
-    opacity:1;
-
-    visibility:visible;
-
-    backdrop-filter:blur(8px);
-
-    -webkit-backdrop-filter:blur(8px);
-
-    pointer-events:auto;
-
-    transition:
-        opacity .8s ease,
-        backdrop-filter .8s ease,
-        visibility 0s linear 0s;
-
-}
-
-
-.sentenceBox{
-
-    position:relative;
-
-    width:100%;
-
-    max-width:500px;
-
-    padding:30px 21px 34px;
-
-    border-radius:26px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(50,35,58,.96),
-            rgba(25,18,30,.97)
-        );
-
-    border:1px solid rgba(255,255,255,.2);
-
-    box-shadow:
-        0 0 25px rgba(155,93,229,.35),
-        0 0 70px rgba(155,93,229,.18),
-        inset 0 0 30px rgba(255,255,255,.03);
-
-    text-align:center;
-
-    opacity:0;
-
-    transform:
-        scale(.55)
-        translateY(35px);
-
-}
-
-#sentenceReveal.show .sentenceBox{
-
-    animation:
-        sentenceBoxAppear 1.1s
-        cubic-bezier(.175,.885,.32,1.275)
-        forwards;
-
-}
-
-@keyframes sentenceBoxAppear{
-
-    0%{
-        opacity:0;
-        transform:
-            scale(.55)
-            translateY(35px);
+    @keyframes screenFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    65%{
-        opacity:1;
-        transform:
-            scale(1.04)
-            translateY(-5px);
+    /* INTRO CON DISSOLVENZA SCENICA A STRATI */
+    #introScreen {
+      background: radial-gradient(circle at 50% 40%, rgba(90,55,120,.24) 0%, rgba(18,15,22,.98) 60%, #08070a 100%);
+      overflow: hidden;
     }
 
-    100%{
-        opacity:1;
-        transform:
-            scale(1)
-            translateY(0);
+    .introPirate {
+      width: 100%;
+      text-align: center;
+      position: relative;
+      padding: 25px 18px;
     }
 
-}
-
-
-.bigHeart{
-
-    font-size:52px;
-
-    margin-bottom:13px;
-
-    opacity:0;
-
-    filter:
-        drop-shadow(0 0 12px rgba(255,100,170,.9));
-
-}
-
-#sentenceReveal.show .bigHeart{
-
-    animation:
-        heartAppear .7s ease 1s forwards,
-        heartBeat 1.25s ease-in-out 1.8s infinite;
-
-}
-
-@keyframes heartAppear{
-
-    0%{
-        opacity:0;
-        transform:scale(.2);
+    .pirateSkull {
+      font-size: 62px;
+      filter: drop-shadow(0 0 20px rgba(155, 93, 229, 0.45));
+      opacity: 0;
+      animation: skullIntro 1.2s ease-out 0.2s forwards, skullFloat 3.5s ease-in-out 1.4s infinite;
     }
 
-    70%{
-        opacity:1;
-        transform:scale(1.18);
+    @keyframes skullIntro {
+      0% { opacity: 0; transform: scale(0.65) translateY(15px); filter: blur(6px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
     }
 
-    100%{
-        opacity:1;
-        transform:scale(1);
+    @keyframes skullFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px) rotate(2deg); }
     }
 
-}
-
-@keyframes heartBeat{
-
-    0%,100%{
-        transform:scale(1);
+    .introTitle {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      opacity: 0;
+      animation: fadeUpItem 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
     }
 
-    50%{
-        transform:scale(1.14);
+    .introTitle span { font-size: 15px; letter-spacing: 4px; color: #c7b4d8; font-weight: 700; }
+    .introTitle small { font-size: 12px; letter-spacing: 3px; color: #888; margin-top: 4px; }
+    .introTitle strong {
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255,255,255,.25), 0 0 28px rgba(155,93,229,.55);
     }
 
-}
-
-
-.sentenceTitle{
-
-    margin:0 0 18px;
-
-    color:#dca5ff;
-
-    font-size:14px;
-
-    font-weight:700;
-
-    letter-spacing:1.5px;
-
-    text-transform:uppercase;
-
-    opacity:0;
-
-}
-
-#sentenceReveal.show .sentenceTitle{
-
-    animation:
-        simpleFade .7s ease 1.05s forwards;
-
-}
-
-
-#animatedSentence{
-
-    margin:0;
-
-    color:#fff;
-
-    font-size:21px;
-
-    line-height:1.7;
-
-    font-weight:700;
-
-    text-shadow:
-        0 0 8px rgba(255,255,255,.35),
-        0 0 22px rgba(155,93,229,.45);
-
-}
-
-#animatedSentence .sentenceWord{
-
-    display:inline-block;
-
-    opacity:0;
-
-    transform:
-        translateY(16px)
-        scale(.75);
-
-}
-
-#sentenceReveal.show
-#animatedSentence .sentenceWord{
-
-    animation:
-        sentenceWordAppear
-        .45s
-        cubic-bezier(.175,.885,.32,1.275)
-        forwards;
-
-}
-
-@keyframes sentenceWordAppear{
-
-    0%{
-        opacity:0;
-        transform:
-            translateY(16px)
-            scale(.75);
+    .introLine {
+      width: 0;
+      height: 1px;
+      margin: 24px auto;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent);
+      animation: expandLine 1s ease-out 1s forwards;
     }
 
-    70%{
-        opacity:1;
-        transform:
-            translateY(-2px)
-            scale(1.08);
+    @keyframes expandLine {
+      to { width: 80%; }
     }
 
-    100%{
-        opacity:1;
-        transform:
-            translateY(0)
-            scale(1);
+    .introText {
+      opacity: 0;
+      animation: fadeUpItem 1s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
     }
 
-}
+    .introText p { margin: 0; color: #ddd; font-size: 16px; line-height: 1.6; }
+    .introWarning { margin-top: 18px !important; color: #fff !important; font-weight: 700; }
+    .introChallenge { margin-top: 18px !important; font-size: 14px !important; color: #aaa !important; }
 
-
-.sentenceBottom{
-
-    margin:22px 0 0;
-
-    font-size:13px;
-
-    color:#aaa;
-
-    opacity:0;
-
-}
-
-#sentenceReveal.show .sentenceBottom{
-
-    animation:
-        simpleFade .8s ease 3.1s forwards;
-
-}
-
-
-@keyframes simpleFade{
-
-    from{
-        opacity:0;
-        transform:translateY(8px);
+    #btnStartGame {
+      opacity: 0;
+      animation: buttonEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.6s forwards, pulseGlow 2.8s infinite 2.5s;
     }
 
-    to{
-        opacity:1;
-        transform:translateY(0);
+    @keyframes fadeUpItem {
+      0% { opacity: 0; transform: translateY(14px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
-}
-
-
-.sentenceSpark{
-
-    position:absolute;
-
-    font-size:18px;
-
-    opacity:0;
-
-    pointer-events:none;
-
-}
-
-#sentenceReveal.show .sentenceSpark{
-
-    animation:
-        sparkFloat 2.8s ease forwards;
-
-}
-
-.spark1{
-    left:9%;
-    top:22%;
-    animation-delay:1.1s !important;
-}
-
-.spark2{
-    right:10%;
-    top:26%;
-    animation-delay:1.35s !important;
-}
-
-.spark3{
-    left:14%;
-    bottom:25%;
-    animation-delay:1.6s !important;
-}
-
-.spark4{
-    right:13%;
-    bottom:22%;
-    animation-delay:1.9s !important;
-}
-
-.spark5{
-    left:50%;
-    top:12%;
-    animation-delay:2.1s !important;
-}
-
-
-@keyframes sparkFloat{
-
-    0%{
-        opacity:0;
-        transform:
-            translateY(20px)
-            scale(.3)
-            rotate(0deg);
+    @keyframes buttonEnter {
+      0% { opacity: 0; transform: scale(0.9) translateY(12px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    25%{
-        opacity:1;
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 8px 25px rgba(0,0,0,.4), 0 0 20px rgba(155,93,229,.3); }
+      50% { box-shadow: 0 8px 25px rgba(0,0,0,.4), 0 0 35px rgba(155,93,229,.7); }
     }
 
-    100%{
-        opacity:0;
-        transform:
-            translateY(-75px)
-            scale(1.15)
-            rotate(180deg);
+    .btn-action {
+      width: 100%;
+      max-width: 320px;
+      margin: 20px auto 0;
+      display: block;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 16px;
+      padding: 15px 20px;
+      color: #fff;
+      background: linear-gradient(145deg, #9b5de5, #7040a5);
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.4), 0 0 20px rgba(155,93,229,.2);
+      cursor: pointer;
+      position: relative;
+      z-index: 50;
+      transition: transform 0.15s ease;
     }
 
-}
+    .btn-action:active { transform: scale(.96); }
 
-
-/* =========================================================
-   INDIZIO FINALE
-========================================================= */
-
-#finalClue{
-    display:none;
-
-    margin-top:20px;
-
-    padding:20px 16px;
-
-    border-radius:18px;
-
-    background:linear-gradient(145deg,#302238,#1c1621);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    box-shadow:0 10px 35px rgba(0,0,0,.3);
-
-    animation:clueAppear .7s ease;
-}
-
-#finalClue .heart{
-    font-size:32px;
-    margin-bottom:8px;
-}
-
-#finalClue p{
-    margin:0;
-
-    color:#eee;
-
-    font-size:16px;
-
-    line-height:1.6;
-}
-
-@keyframes clueAppear{
-
-    0%{
-        opacity:0;
-        transform:translateY(15px) scale(.97);
+    /* SFIDA */
+    #challengeScreen {
+      text-align: center;
+      background: radial-gradient(circle at 50% 42%, rgba(100,65,130,.18), rgba(18,15,22,.98) 65%);
     }
 
-    100%{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
-}
+    .challengeIcon { font-size: 60px; margin-bottom: 15px; }
+    .challengeNumber { font-size: 13px; letter-spacing: 3px; color: #bca7c9; font-weight: 700; margin-bottom: 10px; }
+    .challengeContent h1 { margin: 0; font-size: 26px; line-height: 1.3; }
+    .challengeQuestion { margin: 18px auto 0; max-width: 390px; color: #ddd; font-size: 16px; line-height: 1.6; }
 
-.success{
-    animation:successPulse .7s ease;
-}
-
-@keyframes successPulse{
-
-    0%{
-        transform:scale(1);
+    /* QUIZ */
+    #quizScreen {
+      justify-content: flex-start;
+      padding-top: 35px;
     }
 
-    50%{
-        transform:scale(1.03);
+    .quizHeader { text-align: center; margin-bottom: 20px; }
+    .quizCounter { font-size: 12px; letter-spacing: 2px; color: #a99ab1; font-weight: 700; margin-bottom: 6px; }
+    .quizTitle { margin: 0; font-size: 24px; }
+    .quizProgress {
+      width: 100%;
+      height: 6px;
+      margin-top: 14px;
+      background: rgba(255,255,255,.08);
+      border-radius: 20px;
+      overflow: hidden;
     }
 
-    100%{
-        transform:scale(1);
+    .quizProgressBar {
+      height: 100%;
+      width: 14.285%;
+      background: #9b5de5;
+      border-radius: 20px;
+      transition: width .4s ease;
+      box-shadow: 0 0 12px rgba(155,93,229,.6);
     }
-}
 
-.small{
-    font-size:12px;
-    color:#999;
-    margin-top:14px;
-}
+    .questionBox {
+      background: linear-gradient(145deg, #241b29, #17131c);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 24px;
+      padding: 24px 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+      text-align: center;
+    }
 
-</style>
+    .questionText { margin: 0 0 20px; font-size: 18px; line-height: 1.5; font-weight: 700; }
+    .answers { display: flex; flex-direction: column; gap: 10px; }
+
+    .answerButton {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      padding: 14px 12px;
+      background: linear-gradient(145deg, #35273c, #241b29);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .answerButton.correct {
+      background: linear-gradient(145deg, #4d8b5c, #275b34);
+      border-color: rgba(150,255,170,.6);
+    }
+
+    .answerButton.wrong {
+      background: linear-gradient(145deg, #783f48, #4a222a);
+      border-color: rgba(255,110,120,.55);
+    }
+
+    .questionFeedback { min-height: 25px; margin-top: 14px; font-size: 14px; font-weight: 600; }
+    .questionFeedback.success { color: #b8f5c2; }
+    .questionFeedback.error { color: #ffb0b7; }
+
+    /* FORZIERE */
+    #chestScreen {
+      background: radial-gradient(circle at center, rgba(110,70,145,.25), rgba(18,15,22,.98) 65%);
+      text-align: center;
+    }
+
+    .chestIcon { font-size: 70px; margin-bottom: 12px; }
+    .chestTitle { margin: 10px 0 16px; font-size: 28px; }
+    .chestText { max-width: 400px; margin: 0 auto; color: #ddd; font-size: 15px; line-height: 1.6; }
+
+    /* PUZZLE GOING MERRY */
+    #puzzleScreen {
+      text-align: center;
+      justify-content: center;
+      padding-top: 15px;
+      padding-bottom: 25px;
+    }
+
+    .puzzleHeader h2 { margin: 0 0 4px; font-size: 22px; }
+    .puzzleHeader p { margin: 0 0 14px; color: #bbb; font-size: 13px; }
+
+    .puzzleBoardContainer {
+      position: relative;
+      width: 294px;
+      height: 294px;
+      margin: 0 auto;
+      border: 3px solid #9b5de5;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(155,93,229,0.3);
+      overflow: visible;
+      background: rgba(20, 15, 26, 0.95);
+      transition: all 0.5s ease;
+    }
+
+    .puzzleBoardContainer.solved-container {
+      border-color: #f1c40f;
+      box-shadow: 0 0 35px rgba(241, 196, 15, 0.6), 0 0 60px rgba(155, 93, 229, 0.5);
+    }
+
+    .puzzleBoard {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 3px;
+      background: #111;
+      padding: 3px;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .boardSlot {
+      background: rgba(255,255,255,0.06);
+      border: 1px dashed rgba(255,255,255,0.2);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.25);
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .puzzleBank {
+      width: 100%;
+      max-width: 310px;
+      margin: 15px auto 0;
+      display: grid;
+      grid-template-columns: repeat(3, 90px);
+      gap: 10px;
+      justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+
+    .puzzlePiece {
+      width: 90px;
+      height: 90px;
+      background-image: url('going-merry.jpg.jpg');
+      background-size: 270px 270px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .puzzlePiece.selected {
+      transform: scale(1.06);
+      border-color: #f1c40f;
+      box-shadow: 0 0 15px #f1c40f;
+    }
+
+    .puzzlePiece.in-board {
+      width: 100%;
+      height: 100%;
+      box-shadow: none;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .puzzlePiece.correct-snap { animation: snapGreen 0.5s ease forwards; }
+
+    @keyframes snapGreen {
+      0% { transform: scale(0.92); filter: brightness(1.5); }
+      50% { transform: scale(1.03); filter: drop-shadow(0 0 10px #2ecc71); }
+      100% { transform: scale(1); filter: brightness(1); }
+    }
+
+    .fullShipReveal {
+      position: absolute;
+      inset: -3px;
+      background-image: url('going-merry.jpg.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      pointer-events: none;
+      border-radius: 15px;
+      z-index: 10;
+      transform: scale(0.85);
+      transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .fullShipReveal.active {
+      opacity: 1;
+      transform: scale(1);
+      box-shadow: 0 0 35px rgba(241, 196, 15, 0.8), 0 0 70px rgba(155, 93, 229, 0.6);
+      animation: merryFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes merryFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-5px) rotate(1.2deg); }
+      75% { transform: translateY(4px) rotate(-1deg); }
+    }
+
+    .sparkle-burst {
+      position: absolute;
+      inset: -20px;
+      pointer-events: none;
+      z-index: 20;
+      display: none;
+    }
+
+    .sparkle-burst.show { display: block; }
+
+    .spark-particle {
+      position: absolute;
+      font-size: 20px;
+      animation: burstFloat 1.8s infinite ease-out;
+    }
+
+    .p1 { top: -10px; left: 20%; animation-delay: 0s; }
+    .p2 { top: 10%; right: -15px; animation-delay: 0.3s; }
+    .p3 { bottom: -10px; left: 30%; animation-delay: 0.6s; }
+    .p4 { bottom: 20%; left: -15px; animation-delay: 0.9s; }
+    .p5 { top: -12px; right: 25%; animation-delay: 1.2s; }
+
+    @keyframes burstFloat {
+      0% { opacity: 0; transform: scale(0.4) translateY(0); }
+      50% { opacity: 1; transform: scale(1.2) translateY(-8px); }
+      100% { opacity: 0; transform: scale(0.6) translateY(-16px); }
+    }
+
+    .puzzleVictory {
+      display: none;
+      margin-top: 14px;
+      animation: victoryFadeIn 0.8s ease forwards;
+    }
+
+    @keyframes victoryFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MAPPA SCENOGRAFICA & CRYPTEX */
+    #mapLockScreen {
+      text-align: center;
+      padding-top: 20px;
+      background: radial-gradient(circle at 50% 40%, rgba(90,55,120,.18) 0%, rgba(18,15,22,.98) 65%);
+    }
+
+    .mapStage {
+      position: relative;
+      width: 100%;
+      max-width: 370px;
+      margin: 15px auto 0;
+      perspective: 1000px;
+    }
+
+    .scrollWrapper {
+      position: relative;
+      width: 100%;
+      min-height: 230px;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      transition: transform 0.6s ease;
+    }
+
+    .scrollRoller {
+      width: 18px;
+      background: linear-gradient(90deg, #3d2314, #8b4513, #2b170c);
+      border-radius: 9px;
+      box-shadow: 0 8px 18px rgba(0,0,0,.6), inset 0 0 5px rgba(0,0,0,.8);
+      z-index: 5;
+      flex-shrink: 0;
+      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .scrollBody {
+      flex-grow: 1;
+      margin: 6px -4px;
+      background: #dfc299 linear-gradient(135deg, rgba(160,110,60,.35) 0%, transparent 50%, rgba(120,70,30,.4) 100%);
+      border-top: 2px solid #5a341a;
+      border-bottom: 2px solid #5a341a;
+      box-shadow: inset 0 0 35px rgba(100,55,20,.6), 0 10px 25px rgba(0,0,0,.5);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 22px 14px;
+      overflow: hidden;
+      border-radius: 4px;
+      transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .scrollBody::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, transparent 40%, rgba(60,30,10,.3) 100%);
+      pointer-events: none;
+    }
+
+    .lockHasp {
+      position: relative;
+      z-index: 8;
+      font-size: 52px;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .lockHasp.shake-lock {
+      animation: lockRattle 0.4s ease-in-out;
+    }
+
+    @keyframes lockRattle {
+      0%, 100% { transform: rotate(0); }
+      20% { transform: rotate(-16deg) scale(1.1); }
+      40% { transform: rotate(16deg) scale(1.1); }
+      60% { transform: rotate(-8deg); }
+      80% { transform: rotate(8deg); }
+    }
+
+    .lockHasp.unlock-anim {
+      transform: scale(1.4) translateY(60px) rotate(35deg);
+      opacity: 0;
+      filter: drop-shadow(0 0 15px #f1c40f);
+    }
+
+    .scrollOpenedContent {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1524654458049-e36be0721fa2?auto=format&fit=crop&w=600&q=80') center/cover;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      z-index: 6;
+    }
+
+    .scrollOpenedContent::after {
+      content: "ROTTA VERSO IL TESORO";
+      position: absolute;
+      bottom: 12px;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: #4a2810;
+      text-shadow: 0 1px 2px rgba(255,255,255,.6);
+    }
+
+    .cryptexTitle {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #3b200c;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .cryptexSlots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      z-index: 7;
+    }
+
+    .cryptexChar {
+      width: 32px;
+      height: 42px;
+      background: linear-gradient(180deg, #2b1810 0%, #4a2e1b 50%, #20120b 100%);
+      border: 2px solid #b8860b;
+      border-radius: 7px;
+      color: #f1c40f;
+      font-size: 21px;
+      font-weight: 800;
+      text-align: center;
+      padding: 0;
+      outline: none;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,.8), 0 4px 8px rgba(0,0,0,.4);
+      font-family: monospace;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .cryptexChar:focus {
+      border-color: #f39c12;
+      box-shadow: 0 0 12px rgba(243, 156, 18, 0.8);
+      background: #1a0c06;
+    }
+
+    .cryptexSpacer {
+      width: 8px;
+      height: 3px;
+      background: #8b5a2b;
+      border-radius: 2px;
+    }
+
+    .cryptexFeedback {
+      min-height: 24px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: 10px;
+      z-index: 7;
+    }
+
+    .cryptexFeedback.error {
+      color: #8b0000;
+      animation: cryptexShake 0.4s ease;
+    }
+
+    .cryptexFeedback.success {
+      color: #196f3d;
+    }
+
+    @keyframes cryptexShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    .mapClueBox {
+      max-width: 370px;
+      margin: 16px auto 0;
+      padding: 14px 16px;
+      background: rgba(36,27,41,.92);
+      border: 1px dashed rgba(241,196,15,.35);
+      border-radius: 16px;
+      color: #ddd;
+      font-size: 14.5px;
+      line-height: 1.55;
+    }
+
+    /* =====================================================
+       STANZA MAPPA DEL TESORO & CANVAS TRATTEGGIATO
+       ===================================================== */
+    .treasureMapFrame {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 20px;
+      border: 3px solid #7c4b24;
+      box-shadow: 0 15px 45px rgba(0,0,0,.75), inset 0 0 30px rgba(0,0,0,.85);
+      background: #1a141e;
+      margin-top: 14px;
+    }
+
+    .mapParchmentOverlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, rgba(220,180,120,0.18) 20%, rgba(60,35,12,0.55) 90%);
+      mix-blend-mode: sepia;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .compassRose {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 4;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+    }
+
+    .room {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .room img {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: sepia(0.35) contrast(1.08) brightness(0.92);
+      transition: transform 1.2s cubic-bezier(0.25,1,0.5,1);
+      transform-origin: 55% 58%;
+    }
+
+    .room img.zoomed { transform: scale(2.8); }
+
+    #mapCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    /* Punti X interattivi */
+    .mapMarkX {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e74c3c;
+      font-size: 24px;
+      font-weight: 900;
+      transform: translate(-50%, -50%) scale(0);
+      z-index: 12;
+      cursor: pointer;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.9));
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .mapMarkX.visible {
+      transform: translate(-50%, -50%) scale(1);
+      animation: xGlowTap 1.6s infinite alternate;
+    }
+
+    @keyframes xGlowTap {
+      0% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 0 4px #e74c3c); }
+      100% { transform: translate(-50%, -50%) scale(1.22); filter: drop-shadow(0 0 10px #f1c40f); color: #f1c40f; }
+    }
+
+    #markX1 { left: 36%; top: 22%; }
+    #markX2 { left: 11%; top: 41%; }
+    #markX3 { left: 50%; top: 62%; }
+
+    .photoMessage {
+      position: absolute;
+      left: 50%;
+      top: 32%;
+      transform: translate(-50%,-50%) scale(.85);
+      width: 88%;
+      padding: 16px;
+      background: rgba(20,15,25,.95);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 18px;
+      text-align: center;
+      z-index: 30;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,.8);
+    }
+
+    .photoMessage.show {
+      opacity: 1;
+      transform: translate(-50%,-50%) scale(1);
+    }
+
+    /* Forziere pirata dorato */
+    .chestAnimationContainer {
+      position: absolute;
+      left: 50%;
+      top: 60%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 130px;
+      height: 120px;
+      z-index: 25;
+      opacity: 0;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s;
+    }
+
+    .chestAnimationContainer.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .goldenSunburst {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      background: conic-gradient(
+        from 0deg,
+        rgba(255, 215, 0, 0.4) 0deg 20deg,
+        transparent 20deg 40deg,
+        rgba(255, 215, 0, 0.4) 40deg 60deg,
+        transparent 60deg 80deg,
+        rgba(255, 215, 0, 0.4) 80deg 100deg,
+        transparent 100deg 120deg,
+        rgba(255, 215, 0, 0.4) 120deg 140deg,
+        transparent 140deg 160deg,
+        rgba(255, 215, 0, 0.4) 160deg 180deg,
+        transparent 180deg 200deg,
+        rgba(255, 215, 0, 0.4) 200deg 220deg,
+        transparent 220deg 240deg,
+        rgba(255, 215, 0, 0.4) 240deg 260deg,
+        transparent 260deg 280deg,
+        rgba(255, 215, 0, 0.4) 280deg 300deg,
+        transparent 300deg 320deg,
+        rgba(255, 215, 0, 0.4) 320deg 340deg,
+        transparent 340deg 360deg
+      );
+      border-radius: 50%;
+      animation: spinSunburst 10s linear infinite;
+      z-index: -1;
+      filter: blur(1px);
+    }
+
+    @keyframes spinSunburst {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .chestSvgGraphic {
+      width: 110px;
+      height: 95px;
+      filter: drop-shadow(0 10px 25px rgba(0,0,0,0.85));
+      animation: floatChest 2.6s ease-in-out infinite;
+    }
+
+    @keyframes floatChest {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    /* BLOCCO A SEQUENZA STILE SMARTPHONE */
+    #patternLockBox {
+      display: none;
+      margin-top: 18px;
+      background: linear-gradient(145deg, #241b29, #17131c);
+      border: 1px solid rgba(241,196,15,.3);
+      border-radius: 22px;
+      padding: 22px 14px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,.5);
+    }
+
+    .patternTitle {
+      font-size: 16px;
+      font-weight: 800;
+      color: #f1c40f;
+      margin-bottom: 6px;
+    }
+
+    .patternSubtitle {
+      font-size: 13.5px;
+      color: #bbb;
+      margin-bottom: 15px;
+      line-height: 1.45;
+    }
+
+    .patternCanvasWrapper {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      margin: 0 auto;
+      touch-action: none;
+    }
+
+    #patternCanvas {
+      width: 250px;
+      height: 250px;
+      border-radius: 16px;
+      background: rgba(15, 11, 20, 0.85);
+      border: 2px solid rgba(255,255,255,0.1);
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+      cursor: crosshair;
+    }
+
+    .patternFeedback {
+      min-height: 24px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: 12px;
+    }
+
+    .patternFeedback.error {
+      color: #e74c3c;
+      animation: patternShake 0.4s ease;
+    }
+
+    .patternFeedback.success {
+      color: #2ecc71;
+    }
+
+    @keyframes patternShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    /* ENIGMA: LA PERGAMENA DEI 4 SIGILLI */
+    .riddle {
+      display: none;
+      margin-top: 20px;
+      background: linear-gradient(145deg, #241b29, #17131c);
+      border: 1px solid rgba(241,196,15,.35);
+      border-radius: 20px;
+      padding: 22px 16px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,.5);
+    }
+
+    .parchmentBox {
+      background: #dfc299 linear-gradient(135deg, rgba(160,110,60,.3) 0%, transparent 60%, rgba(120,70,30,.35) 100%);
+      border: 2px solid #5a341a;
+      border-radius: 14px;
+      padding: 20px 14px;
+      color: #2c1a0e;
+      box-shadow: inset 0 0 25px rgba(100,55,20,.45);
+      font-size: 16px;
+      line-height: 1.85;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .sealedSlot {
+      display: inline-block;
+      padding: 2px 10px;
+      margin: 2px;
+      border-radius: 8px;
+      background: #4a2810;
+      color: #f1c40f;
+      font-weight: 800;
+      letter-spacing: 1px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
+      transition: all 0.5s ease;
+      font-size: 14px;
+    }
+
+    .sealedSlot.active-slot {
+      border: 2px solid #f39c12;
+      animation: pulseSlot 1.5s infinite alternate;
+    }
+
+    @keyframes pulseSlot {
+      from { transform: scale(1); box-shadow: 0 0 6px rgba(243, 156, 18, 0.5); }
+      to { transform: scale(1.06); box-shadow: 0 0 14px rgba(243, 156, 18, 0.9); }
+    }
+
+    .sealedSlot.unlocked {
+      background: #27ae60;
+      color: #fff;
+      text-shadow: 0 0 6px rgba(255,255,255,0.7);
+      animation: unlockGlow 0.6s ease forwards;
+    }
+
+    @keyframes unlockGlow {
+      0% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .sigilSolverCard {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 16px 12px;
+    }
+
+    .sigilHintText {
+      font-size: 13.5px;
+      color: #f1c40f;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .letterSlotRow {
+      min-height: 48px;
+      border: 1px dashed rgba(241, 196, 15, 0.5);
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 6px;
+      margin-bottom: 12px;
+    }
+
+    .letterBankRow {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .letterChip {
+      width: 32px;
+      height: 38px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: linear-gradient(145deg, #3d2b45, #221827);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.2s;
+    }
+
+    .letterChip:active {
+      transform: scale(0.92);
+    }
+
+    .letterSlotRow .letterChip {
+      background: linear-gradient(145deg, #9b5de5, #6c3483);
+      border-color: #f1c40f;
+      color: #fff;
+    }
+
+    .sigilControls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .sigilBtn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: #ddd;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    #sigilFeedback {
+      min-height: 22px;
+      font-size: 13.5px;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    /* =====================================================
+       GRAN FINALE SPETTACOLARE: FRASE OLOGRAFICA & INDIZIO
+       ===================================================== */
+    #sentenceReveal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: radial-gradient(circle at center, rgba(155,93,229,.45) 0%, rgba(10,8,14,.98) 80%);
+      backdrop-filter: blur(8px);
+    }
+
+    #sentenceReveal.show {
+      display: flex;
+      animation: modalFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .grandRevealBox {
+      width: 100%;
+      max-width: 480px;
+      padding: 35px 22px;
+      border-radius: 28px;
+      background: linear-gradient(165deg, rgba(42, 28, 52, 0.98), rgba(18, 13, 22, 0.99));
+      border: 2px solid rgba(241, 196, 15, 0.6);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 50px rgba(155, 93, 229, 0.45);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .grandRevealBox::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent 0deg, rgba(241,196,15,0.15) 60deg, transparent 120deg);
+      animation: rotateGlow 9s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes rotateGlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .grandBadge {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: #f1c40f;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      text-shadow: 0 0 10px rgba(241,196,15,0.7);
+      position: relative;
+      z-index: 2;
+    }
+
+    .grandTitle {
+      font-size: 23px;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 20px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 18px rgba(255,255,255,0.5);
+      position: relative;
+      z-index: 2;
+    }
+
+    .wordStreamContainer {
+      min-height: 120px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin: 10px 0 25px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .revealWord {
+      font-size: 21px;
+      font-weight: 800;
+      color: #f6e58d;
+      text-shadow: 0 0 14px rgba(241, 196, 15, 0.85);
+      opacity: 0;
+      transform: translateY(14px) scale(0.85);
+      animation: wordPopIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .revealWord.special {
+      color: #ff9ff3;
+      text-shadow: 0 0 20px rgba(255, 159, 243, 0.95);
+      font-size: 24px;
+    }
+
+    @keyframes wordPopIn {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .btn-grand-clue {
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all 0.5s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn-grand-clue.active {
+      opacity: 1;
+      transform: translateY(0);
+      animation: pulseGlow 2.5s infinite;
+    }
+
+    /* SCHERMATA FINALE: L'INDIZIO DELLO SPECCHIO */
+    #finalScreen {
+      text-align: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 35%, rgba(120,60,160,.28) 0%, rgba(14,10,18,.98) 70%, #050406 100%);
+      padding: 30px 18px;
+    }
+
+    .finalMirrorStage {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 30px 22px;
+      border-radius: 26px;
+      background: linear-gradient(145deg, rgba(38,26,46,.95), rgba(20,15,24,.98));
+      border: 2px solid #f1c40f;
+      box-shadow: 0 0 45px rgba(241,196,15,.35), inset 0 0 25px rgba(155,93,229,.25);
+      position: relative;
+      animation: mirrorEntry 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes mirrorEntry {
+      from { opacity: 0; transform: scale(0.85) translateY(30px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .mirrorOrb {
+      font-size: 65px;
+      margin-bottom: 15px;
+      display: inline-block;
+      animation: mirrorFloat 3.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 25px rgba(241,196,15,0.7));
+    }
+
+    @keyframes mirrorFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(4deg); }
+    }
+
+    .finalClueTitle {
+      font-size: 20px;
+      font-weight: 800;
+      color: #f1c40f;
+      margin: 0 0 16px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 12px rgba(241,196,15,0.6);
+    }
+
+    .finalPoem {
+      font-size: 16.5px;
+      line-height: 1.8;
+      color: #f0e6f6;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .finalPoem b {
+      color: #fff;
+      font-weight: 800;
+      font-size: 18px;
+      display: block;
+      margin: 14px 0;
+      text-shadow: 0 0 15px rgba(220,165,255,0.85);
+    }
+
+    .finalPoem span {
+      color: #f39c12;
+      font-style: italic;
+      display: block;
+      margin-top: 14px;
+      font-size: 15px;
+    }
+
+  </style>
 </head>
-
 <body>
 
-<!-- =========================
-     INTRO
-========================= -->
+  <!-- Fendente Spada Zoro -->
+  <div id="zoroSlashOverlay">
+    <div class="slashBlade"></div>
+  </div>
 
-<main class="screen" id="introScreen">
+  <!-- INTRO -->
+  <main class="screen active" id="introScreen">
+    <div class="introPirate">
+      <div class="pirateSkull">🏴‍☠️</div>
+      <div class="introTitle">
+        <span>IL TESORO SEGRETO</span>
+        <small>DI</small>
+        <strong>RORONOA ZORO</strong>
+      </div>
+      <div class="introLine"></div>
+      <div class="introText">
+        <p>Hai trovato qualcosa<br>che non doveva essere trovato...</p>
+        <p class="introWarning">Ma il tesoro non sarà<br>così facile da ottenere.</p>
+        <p class="introChallenge">Se vuoi scoprire cosa si nasconde qui dentro,<br>dovrai dimostrare di essere degna di trovarlo.</p>
+      </div>
+      <button class="btn-action" id="btnStartGame" onclick="goToChallenge()">INIZIA LA SFIDA</button>
+    </div>
+  </main>
 
-    <div class="card">
+  <!-- PRESENTAZIONE SFIDA -->
+  <section class="screen" id="challengeScreen">
+    <div class="challengeIcon">⚔️</div>
+    <div class="challengeNumber">SFIDA N. 1</div>
+    <div class="challengeContent">
+      <h1>Conosci davvero la ciurma di<br>Monkey D. Rufy?</h1>
+      <p class="challengeQuestion">Dimostralo rispondendo alle domande e dimostra di essere degna di continuare la ricerca del tesoro.</p>
+      <button class="btn-action" onclick="startQuiz()">COMINCIA LA SFIDA</button>
+    </div>
+  </section>
 
-        <div style="font-size:42px">
-            ❤️
+  <!-- QUIZ -->
+  <section class="screen" id="quizScreen">
+    <div class="quizHeader">
+      <div id="quizCounter" class="quizCounter">DOMANDA 1 / 7</div>
+      <h2 class="quizTitle">La sfida di Zoro</h2>
+      <div class="quizProgress">
+        <div id="quizProgressBar" class="quizProgressBar"></div>
+      </div>
+    </div>
+    <div id="questionBox" class="questionBox">
+      <p id="questionText" class="questionText"></p>
+      <div id="answers" class="answers"></div>
+      <div id="questionFeedback" class="questionFeedback"></div>
+    </div>
+  </section>
+
+  <!-- FORZIERE TROVATO -->
+  <section class="screen" id="chestScreen">
+    <div class="chestIcon">🏆</div>
+    <div class="challengeNumber">SFIDA N. 1 COMPLETATA</div>
+    <h1 class="chestTitle">SFIDA SUPERATA!</h1>
+    <div class="chestText">
+      <p>Hai dimostrato di conoscere la ciurma di Monkey D. Rufy.</p>
+      <p>Ma la tua vera avventura comincia solo adesso...</p>
+      <p style="margin-top: 18px; color: #fff; font-weight: 700;">Hai trovato qualcosa di incredibile.</p>
+      <p>Zoro custodiva con cura un <strong>forziere segreto</strong>, nascosto lontano da occhi indiscreti.</p>
+      <p>Ma c'è un problema... <strong>Il forziere è chiuso.</strong></p>
+      <p>Per aprirlo dovrai risolvere l'enigma che Zoro ha lasciato per te.</p>
+      <p><strong>Riuscirai ad aprirlo?</strong></p>
+    </div>
+    <button class="btn-action" onclick="startPuzzle()">RISOLVI L'ENIGMA</button>
+  </section>
+
+  <!-- PUZZLE DELLA GOING MERRY -->
+  <section class="screen" id="puzzleScreen">
+    <div class="puzzleHeader" id="puzzleHeader">
+      <div class="challengeNumber">SFIDA N. 2</div>
+      <h2>Ricostruisci la Going Merry ⛵</h2>
+      <p id="puzzleInstruction">Tocca un pezzo e poi tocca la casella giusta dove posizionarlo.</p>
+    </div>
+
+    <div class="puzzleBoardContainer" id="puzzleBoardContainer">
+      <div class="puzzleBoard" id="puzzleBoard"></div>
+      <div class="fullShipReveal" id="fullShipReveal"></div>
+      <div class="sparkle-burst" id="sparkleBurst">
+        <span class="spark-particle p1">✨</span>
+        <span class="spark-particle p2">⭐</span>
+        <span class="spark-particle p3">✨</span>
+        <span class="spark-particle p4">🌟</span>
+        <span class="spark-particle p5">✨</span>
+      </div>
+    </div>
+
+    <div class="puzzleBank" id="puzzleBank"></div>
+
+    <div class="puzzleVictory" id="puzzleVictory">
+      <h3 style="color: #f1c40f; margin: 10px 0 4px; font-size: 20px;">✨ LA GOING MERRY È TORNATA! ✨</h3>
+      <p style="margin: 0; color: #ddd; font-size: 14px; line-height: 1.4;">Il sigillo è rotto! All'interno del forziere c'è qualcosa...</p>
+      <button class="btn-action" onclick="openMapLock()">APRI IL FORZIERE 🗝️</button>
+    </div>
+  </section>
+
+  <!-- MAPPA DEL TESORO SIGILLATA DA CRYPTEX -->
+  <section class="screen" id="mapLockScreen">
+    <div class="challengeNumber">IL SIGILLO DEL FORZIERE</div>
+    <h2 style="margin: 0 0 6px; font-size: 24px;">Mappa del Tesoro 🗺️</h2>
+    <p style="margin: 0 0 14px; color: #bbb; font-size: 14px;">La pergamena è protetta da un meccanismo a cifre.</p>
+
+    <div class="mapStage">
+      <div class="scrollWrapper" id="scrollWrapper">
+        <div class="scrollRoller" id="rollerLeft"></div>
+        <div class="scrollBody" id="scrollBody">
+          <div class="lockHasp" id="lockHasp">🔒</div>
+          <div class="cryptexTitle" id="cryptexTitle">COMBINAZIONE SEGRETA</div>
+
+          <div class="cryptexSlots" id="cryptexSlots">
+            <input type="text" inputmode="numeric" maxlength="1" class="cryptexChar" id="c0">
+            <input type="text" inputmode="numeric" maxlength="1" class="cryptexChar" id="c1">
+            <div class="cryptexSpacer"></div>
+            <input type="text" inputmode="numeric" maxlength="1" class="cryptexChar" id="c2">
+            <input type="text" inputmode="numeric" maxlength="1" class="cryptexChar" id="c3">
+            <div class="cryptexSpacer"></div>
+            <input type="text" inputmode="numeric" maxlength="1" class="cryptexChar" id="c4">
+            <input type="text" inputmode="numeric" maxlength="1" class="cryptexChar" id="c5">
+            <input type="text" inputmode="numeric" maxlength="1" class="cryptexChar" id="c6">
+            <input type="text" inputmode="numeric" maxlength="1" class="cryptexChar" id="c7">
+          </div>
+
+          <div class="cryptexFeedback" id="cryptexFeedback"></div>
+          <div class="scrollOpenedContent" id="scrollOpenedContent"></div>
         </div>
-
-        <h1>
-            Una piccola sorpresa per te
-        </h1>
-
-        <p>
-            Se sei arrivata fin qui,<br>
-            significa che il gioco è ufficialmente iniziato...
-        </p>
-
-        <p>
-            Ma non pensare che sarà così semplice. 😏
-        </p>
-
-        <div class="divider"></div>
-
-        <p>
-            <b>Dovrai aguzzare bene la vista... 👀</b>
-        </p>
-
-        <p class="small">
-            Alcune cose si nascondono proprio davanti ai nostri occhi...
-        </p>
-
-        <button class="main" onclick="startGame()">
-            Inizia la ricerca ✨
-        </button>
-
+        <div class="scrollRoller" id="rollerRight"></div>
+      </div>
     </div>
 
-</main>
+    <button class="btn-action" id="btnUnlockMap" style="margin-top: 18px;" onclick="verifyCryptexCode()">SBLOCCA IL MECCANISMO</button>
 
+    <div class="mapClueBox">
+      💡 <b>Indizio di Zoro:</b><br>
+      <i>«Dove potrebbe nascondersi il codice? Forse Zoro ha fatto riparare la nave per un motivo... controlliamo lì.»</i>
+    </div>
+  </section>
 
-<!-- =========================
-     GIOCO
-========================= -->
-
-<section class="screen" id="gameScreen">
-
-    <div class="gameTitle">
-
-        <h2>
-            Trova ciò che si nasconde... 🔎
-        </h2>
-
-        <p>
-            Guarda attentamente la stanza.<br>
-            Tocca ciò che pensi possa nascondere qualcosa.
-        </p>
-
+  <!-- GIOCO DELLA STANZA / MAPPA DEL TESORO -->
+  <section class="screen" id="gameScreen">
+    <div style="text-align: center;">
+      <h2 style="margin: 0 0 4px;">La Rotta nella Stanza 🧭</h2>
+      <p id="roomHeaderHint" style="margin: 0; color: #f1c40f; font-size: 14px; font-weight: 600;">Segui il tracciato e tocca la X per cercare...</p>
     </div>
 
+    <div class="treasureMapFrame">
+      <div class="mapParchmentOverlay"></div>
+      <div class="compassRose">🧭</div>
 
-    <div class="room">
-
+      <div class="room" id="roomContainer">
         <img id="roomImg" src="stanza.jpeg" alt="La stanza">
 
+        <canvas id="mapCanvas"></canvas>
 
-        <!-- MESSAGGIO -->
+        <button id="markX1" class="mapMarkX" aria-label="Quadro" onclick="inspectMark(1)">✖</button>
+        <button id="markX2" class="mapMarkX" aria-label="Comodino" onclick="inspectMark(2)">✖</button>
+        <button id="markX3" class="mapMarkX" aria-label="Sotto il letto" onclick="inspectMark(3)">✖</button>
 
         <div id="photoMessage" class="photoMessage">
-
-            <div id="photoMessageEmoji" class="emoji">
-                👀
-            </div>
-
-            <div id="photoMessageText" class="text">
-            </div>
-
+          <div id="photoMessageEmoji" style="font-size: 30px; margin-bottom: 6px;"></div>
+          <div id="photoMessageText" style="font-size: 15px; line-height: 1.5; color: #ddd;"></div>
         </div>
 
-
-        <!-- QUADRO -->
-
-        <button
-            id="pictureHotspot"
-            class="hotspot"
-            aria-label="Quadro"
-            onclick="checkHotspot('picture')">
-        </button>
-
-
-        <!-- COMODINO -->
-
-        <button
-            id="nightstandHotspot"
-            class="hotspot"
-            aria-label="Comodino"
-            onclick="checkHotspot('nightstand')">
-        </button>
-
-
-        <!-- LETTO -->
-
-        <button
-            id="bedHotspot"
-            class="hotspot"
-            aria-label="Letto"
-            onclick="checkHotspot('bed')">
-        </button>
-
-
-        <!-- REGALO -->
-
-        <div id="gift" class="gift">
-            🎁
+        <div id="treasureChest" class="chestAnimationContainer">
+          <div class="goldenSunburst"></div>
+          <svg class="chestSvgGraphic" viewBox="0 0 100 85">
+            <ellipse cx="50" cy="40" rx="35" ry="18" fill="url(#goldShine)" filter="drop-shadow(0 0 8px #fff)" />
+            <path d="M15,40 L85,40 L78,75 L22,75 Z" fill="#5c2c16" stroke="#d4af37" stroke-width="2.5" />
+            <path d="M26,40 L24,75 M74,40 L76,75" stroke="#d4af37" stroke-width="2.5" />
+            <path d="M12,40 Q50,15 88,40 Q50,26 12,40 Z" fill="#7a3e1d" stroke="#f1c40f" stroke-width="2.5" />
+            <rect x="46" y="42" width="8" height="11" rx="2" fill="#f1c40f" stroke="#b8860b" stroke-width="1" />
+            <circle cx="50" cy="46" r="1.5" fill="#333" />
+            <circle cx="42" cy="38" r="4" fill="#ffd700" stroke="#b8860b" stroke-width="1" />
+            <circle cx="56" cy="37" r="4.5" fill="#ffd700" stroke="#b8860b" stroke-width="1" />
+            <circle cx="49" cy="34" r="4" fill="#fff" filter="drop-shadow(0 0 4px #ffd700)" />
+            <polygon points="50,29 53,35 47,35" fill="#e74c3c" />
+            <defs>
+              <radialGradient id="goldShine" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="40%" stop-color="#f1c40f" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#e67e22" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+          </svg>
         </div>
-
+      </div>
     </div>
 
+    <!-- BLOCCO A SEQUENZA STILE SMARTPHONE -->
+    <div id="patternLockBox">
+      <div class="patternTitle">🔒 SIGILLO SEGRETO DI ZORO</div>
+      <div class="patternSubtitle">Traccia con il dito la sequenza segreta presente sul forziere per aprirlo:</div>
+      <div class="patternCanvasWrapper">
+        <canvas id="patternCanvas" width="250" height="250"></canvas>
+      </div>
+      <div class="patternFeedback" id="patternFeedback"></div>
+    </div>
 
-    <!-- =========================
-         SECONDO ENIGMA
-    ========================= -->
-
+    <!-- ENIGMA: LA PERGAMENA DEI 4 SIGILLI -->
     <div id="riddleBox" class="riddle">
+      <h3 style="margin-top: 0; color: #f1c40f;">I 4 Sigilli del Cuore 📜</h3>
+      <p style="color: #bbb; font-size: 13.5px; margin-bottom: 14px;">La pergamena è protetta da 4 parole sigillate.<br>Ricomponi le lettere per spezzare ogni sigillo.</p>
 
-        <h3>
-            Un'ultima prova... 🧩
-        </h3>
+      <div class="parchmentBox">
+        sei il mio <span id="slot0" class="sealedSlot active-slot">[ 1. SIGILLO ]</span><br>
+        con la voce degli <span id="slot1" class="sealedSlot">[ 2. SIGILLO ]</span>,<br>
+        con il profumo dell'<span id="slot2" class="sealedSlot">[ 3. SIGILLO ]</span><br>
+        e la bellezza del <span id="slot3" class="sealedSlot">[ 4. SIGILLO ]</span>
+      </div>
 
-        <p class="riddleIntro">
+      <div class="sigilSolverCard">
+        <div id="sigilHint" class="sigilHintText">Ricomponi il 1° Sigillo:</div>
+        
+        <div id="letterSlotRow" class="letterSlotRow"></div>
+        <div id="letterBankRow" class="letterBankRow"></div>
 
-            Le parole sono tutte qui sotto,
-            ma qualcosa è andato storto...
-
-            <br>
-
-            <b>
-                Rimettile nel giusto ordine.
-            </b>
-
-        </p>
-
-
-        <div class="answerTitle">
-            La tua frase:
+        <div class="sigilControls">
+          <button class="sigilBtn" onclick="undoSigilLetter()">↩ Cancella</button>
+          <button class="sigilBtn" onclick="resetSigilLetters()">🔄 Azzera</button>
         </div>
-
-
-        <div id="answerArea">
-        </div>
-
-
-        <div class="wordsTitle">
-            Tocca le parole per costruire la frase:
-        </div>
-
-
-        <div id="wordBank">
-
-            <button class="word" data-word="bellezza">
-                bellezza
-            </button>
-
-            <button class="word" data-word="il">
-                il
-            </button>
-
-            <button class="word" data-word="con">
-                con
-            </button>
-
-            <button class="word" data-word="miracolo">
-                miracolo
-            </button>
-
-            <button class="word" data-word="la">
-                la
-            </button>
-
-            <button class="word" data-word="angeli,">
-                angeli,
-            </button>
-
-            <button class="word" data-word="sei">
-                sei
-            </button>
-
-            <button class="word" data-word="profumo">
-                profumo
-            </button>
-
-            <button class="word" data-word="voce">
-                voce
-            </button>
-
-            <button class="word" data-word="mio">
-                mio
-            </button>
-
-            <button class="word" data-word="degli">
-                degli
-            </button>
-
-            <button class="word" data-word="dell'amore">
-                dell'amore
-            </button>
-
-            <button class="word" data-word="e">
-                e
-            </button>
-
-            <button class="word" data-word="la">
-                la
-            </button>
-
-            <button class="word" data-word="con">
-                con
-            </button>
-
-            <button class="word" data-word="il">
-                il
-            </button>
-
-            <button class="word" data-word="del">
-                del
-            </button>
-
-            <button class="word" data-word="mumimesso">
-                mumimesso
-            </button>
-
-        </div>
-
-
-        <div id="riddleFeedback">
-        </div>
-
-
-        <!-- INDIZIO FINALE -->
-
-        <div id="finalClue">
-
-            <div class="heart">
-                ❤️
-            </div>
-
-            <p>
-
-                <b>
-                    L'ultimo passo è qui vicino...
-                </b>
-
-                <br><br>
-
-                Sei arrivata fin qui, ma manca ancora una cosa.
-
-                <br><br>
-
-                C'è un posto in cui puoi incontrare
-                ogni giorno la persona più bella del mondo...
-
-                <br><br>
-
-                <b>
-                    Vai dove il suo riflesso aspetta proprio te. 🪞❤️
-                </b>
-
-                <br><br>
-
-                E quando ti troverai davanti a lei...
-                forse troverai anche ciò che stai cercando. ✨
-
-            </p>
-
-        </div>
-
-
+        <div id="sigilFeedback"></div>
+      </div>
     </div>
+  </section>
 
+  <!-- MODAL FINALE: FRASE AD ANIMAZIONE OLOGRAFICA -->
+  <div id="sentenceReveal">
+    <div class="grandRevealBox">
+      <div class="grandBadge">✨ SIGILLO ETERNO SPEZZATO ✨</div>
+      <h2 class="grandTitle">IL SEGRETO DI ZORO</h2>
+      
+      <div id="wordStream" class="wordStreamContainer"></div>
 
-</section>
-
-
-<!-- =========================================================
-     ANIMAZIONE FRASE COMPLETA
-========================================================= -->
-
-<div id="sentenceReveal">
-
-    <div class="sentenceBox">
-
-        <div class="sentenceSpark spark1">
-            ✨
-        </div>
-
-        <div class="sentenceSpark spark2">
-            💕
-        </div>
-
-        <div class="sentenceSpark spark3">
-            ✦
-        </div>
-
-        <div class="sentenceSpark spark4">
-            ❤️
-        </div>
-
-        <div class="sentenceSpark spark5">
-            ✨
-        </div>
-
-
-        <div class="bigHeart">
-            ❤️
-        </div>
-
-
-        <div class="sentenceTitle">
-            Hai ricostruito la frase ✨
-        </div>
-
-
-        <p id="animatedSentence">
-        </p>
-
-
-        <p class="sentenceBottom">
-            Forse questa frase nasconde qualcosa di più... ❤️
-        </p>
-
-
+      <button id="btnGrandClue" class="btn-action btn-grand-clue" onclick="showFinalClueScreen()">
+        SCOPRI DOVE SI TROVA IL TESORO 🗝️
+      </button>
     </div>
+  </div>
 
-</div>
+  <!-- SCHERMATA FINALE: L'INDIZIO DELLO SPECCHIO -->
+  <section class="screen" id="finalScreen">
+    <div class="finalMirrorStage">
+      <div class="mirrorOrb">🪞</div>
+      <div class="finalClueTitle">L'ULTIMA ROTTA</div>
+      <p class="finalPoem">
+        Hai spezzato ogni barriera e trovato ciò che Zoro custodiva con più cura nel suo cuore...<br><br>
+        Ma un vero tesoro non può restare chiuso in uno schermo.<br><br>
+        C'è un luogo sacro dove ogni singolo giorno puoi ammirare la persona più bella del mondo...<br>
+        <b>Vai dove il suo riflesso aspetta proprio te.</b>
+        <span>Guarda bene davanti a te... e troverai il tuo vero regalo. ❤️</span>
+      </p>
+    </div>
+  </section>
 
-
-<script>
-
-/* =========================
-   STATO DEL GIOCO
-========================= */
-
-let found = {
-    picture:false,
-    nightstand:false
-};
-
-let clickCount = 0;
-
-
-/* =========================
-   AVVIO
-========================= */
-
-function startGame(){
-
-    document.getElementById('introScreen').style.display='none';
-
-    document.getElementById('gameScreen').style.display='flex';
-
-}
-
-
-/* =========================
-   MESSAGGIO SULLA FOTO
-========================= */
-
-let messageTimer;
-
-function showPhotoMessage(emoji,text){
-
-    const message =
-        document.getElementById('photoMessage');
-
-    const emojiElement =
-        document.getElementById('photoMessageEmoji');
-
-    const textElement =
-        document.getElementById('photoMessageText');
-
-
-    clearTimeout(messageTimer);
-
-
-    emojiElement.textContent = emoji;
-
-    textElement.innerHTML = text;
-
-
-    message.classList.remove('show');
-
-    void message.offsetWidth;
-
-    message.classList.add('show');
-
-
-    messageTimer = setTimeout(()=>{
-
-        message.classList.remove('show');
-
-    },4500);
-
-}
-
-
-/* =========================
-   HOTSPOT
-========================= */
-
-function checkHotspot(spot){
-
-
-    /* =========================
-       QUADRO
-    ========================= */
-
-    if(
-        spot==='picture' &&
-        !found.picture
-    ){
-
-        found.picture=true;
-        clickCount++;
-
-
-        document
-            .getElementById('pictureHotspot')
-            .style.display='none';
-
-
-        if(clickCount===1){
-
-            showPhotoMessage(
-                '🥺',
-                'Mi dispiace, ma qui non c\'è niente...<br><b>Cerca altrove.</b>'
-            );
-
-        }
-
-        else if(clickCount===2){
-
-            showPhotoMessage(
-                '👀',
-                'Ci siamo quasi...<br><b>Prova a cercare dove riposano i sogni.</b>'
-            );
-
-            revealBed();
-
-        }
-
+  <script>
+    /* SUONI BEEP */
+    function playBeep(freq, type, duration) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+        setTimeout(() => ctx.close(), duration * 1000 + 100);
+      } catch(e) {}
     }
 
+    /* EFFETTO FENDENTE DI ZORO */
+    function triggerZoroSlash(callback) {
+      playBeep(880, 'sawtooth', 0.12);
+      setTimeout(() => playBeep(220, 'sine', 0.25), 80);
 
-    /* =========================
-       COMODINO
-    ========================= */
+      const slash = document.getElementById('zoroSlashOverlay');
+      slash.classList.remove('slashing');
+      void slash.offsetWidth;
+      slash.classList.add('slashing');
 
-    if(
-        spot==='nightstand' &&
-        !found.nightstand
-    ){
-
-        found.nightstand=true;
-        clickCount++;
-
-
-        document
-            .getElementById('nightstandHotspot')
-            .style.display='none';
-
-
-        if(clickCount===1){
-
-            showPhotoMessage(
-                '🥺',
-                'Mi dispiace, ma qui non c\'è niente...<br><b>Cerca altrove.</b>'
-            );
-
-        }
-
-        else if(clickCount===2){
-
-            showPhotoMessage(
-                '👀',
-                'Ci siamo quasi...<br><b>Prova a cercare dove riposano i sogni.</b>'
-            );
-
-            revealBed();
-
-        }
-
+      setTimeout(() => {
+        if (callback) callback();
+      }, 220);
     }
 
-
-    /* ========================= 
-       LETTO
-    ========================= */ 
-
-    if( spot==='bed' && clickCount===2 ){ 
-
-        document.getElementById('bedHotspot').style.display='none'; 
-
-        document.getElementById('roomImg').classList.add('zoomed');
-
-        showPhotoMessage( 
-            '🔎', 
-            'Diamo un\'occhiata più da vicino sotto il letto...' 
-        ); 
-
-        setTimeout(()=>{ 
-            document.getElementById('gift').classList.add('show'); 
-        }, 700); 
-
-        setTimeout(()=>{ 
-            showPhotoMessage( 
-                '🎁', 
-                'Eccolo lì, l\'hai trovato! ❤️<br><b>Ma questo era solo l’inizio...</b>' 
-            ); 
-        }, 1800); 
-
-        setTimeout(()=>{ 
-            document.getElementById('riddleBox').style.display='block'; 
-            document.getElementById('riddleBox').scrollIntoView({ 
-                behavior:'smooth', 
-                block:'center' 
-            }); 
-        }, 8000); 
-    }
-
-}
-
-
-/* =========================
-   RIVELA LETTO
-========================= */
-
-function revealBed(){
-
-    const bed =
-        document.getElementById('bedHotspot');
-
-
-    bed.style.display='block';
-
-
-    bed.classList.remove('reveal');
-
-    void bed.offsetWidth;
-
-    bed.classList.add('reveal');
-
-}
-
-
-/* =========================
-   SECONDO ENIGMA
-========================= */
-
-const correctWords = [
-
-    'sei',
-    'il',
-    'mio',
-    'miracolo',
-    'con',
-    'la',
-    'voce',
-    'degli',
-    'angeli,',
-    'con',
-    'il',
-    'profumo',
-    "dell'amore",
-    'e',
-    'la',
-    'bellezza',
-    'del',
-    'mumimesso'
-
-];
-
-
-const answerArea =
-    document.getElementById('answerArea');
-
-const wordBank =
-    document.getElementById('wordBank');
-
-const feedback =
-    document.getElementById('riddleFeedback');
-
-
-let puzzleFinished=false;
-
-
-/* =========================
-   PAROLE
-========================= */
-
-document
-    .querySelectorAll('.word')
-    .forEach(word=>{
-
-        word.addEventListener('click',()=>{
-
-
-            if(puzzleFinished){
-
-                return;
-
-            }
-
-
-            if(word.parentElement===wordBank){
-
-                answerArea.appendChild(word);
-
-
-                word.classList.remove('added');
-
-                void word.offsetWidth;
-
-                word.classList.add('added');
-
-            }
-
-
-            else if(
-                word.parentElement===answerArea
-            ){
-
-                wordBank.appendChild(word);
-
-            }
-
-
-            checkAnswer();
-
+    function showScreen(id, withSlash = false) {
+      const execTransition = () => {
+        const allScreens = document.querySelectorAll('.screen');
+        allScreens.forEach(s => {
+          s.classList.remove('active');
+          s.style.display = 'none';
         });
+        const target = document.getElementById(id);
+        if (target) {
+          target.style.display = 'flex';
+          void target.offsetWidth;
+          target.classList.add('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      };
 
-    });
-
-
-/* =========================
-   CONTROLLO FRASE
-========================= */
-
-function checkAnswer(){
-
-
-    const words =
-        [
-            ...answerArea.querySelectorAll('.word')
-        ]
-        .map(word=>word.dataset.word);
-
-
-    if(
-        words.length !==
-        correctWords.length
-    ){
-
-        feedback.innerHTML='';
-
-        return;
-
+      if (withSlash) {
+        triggerZoroSlash(execTransition);
+      } else {
+        execTransition();
+      }
     }
 
-
-    const correct =
-        words.every(
-            (word,index)=>
-                word===correctWords[index]
-        );
-
-
-    if(correct){
-
-        puzzleSolved();
-
+    function goToChallenge() {
+      showScreen('challengeScreen', true);
     }
 
-    else{
-
-        feedback.innerHTML =
-            'Mmm... qualcosa non torna. 👀<br>' +
-            '<b>Tocca una parola per rimetterla tra le altre.</b>';
-
+    function startQuiz() {
+      currentQuestion = 0;
+      showScreen('quizScreen', true);
+      renderQuestion();
     }
 
-}
+    function startPuzzle() { 
+      showScreen('puzzleScreen', true); 
+      initPuzzle();
+    }
 
+    function openMapLock() {
+      showScreen('mapLockScreen', true);
+      setTimeout(() => {
+        const first = document.getElementById('c0');
+        if (first) first.focus();
+      }, 300);
+    }
 
-/* =========================================================
-   CREA LA FRASE PAROLA PER PAROLA
-========================================================= */
+    function openRoomGame() { 
+      showScreen('gameScreen', true);
+      setTimeout(() => {
+        initInteractiveRoomRoute();
+      }, 250);
+    }
 
-function createAnimatedSentence(){
-
-    const container =
-        document.getElementById('animatedSentence');
-
-
-    container.innerHTML='';
-
-
-    const sentenceWords = [
-
-        'Sei',
-        'il',
-        'mio',
-        'miracolo',
-        'con',
-        'la',
-        'voce',
-        'degli',
-        'angeli,',
-        'con',
-        'il',
-        'profumo',
-        "dell'amore",
-        'e',
-        'la',
-        'bellezza',
-        'del',
-        'mumimesso.'
-
+    /* QUIZ DATA */
+    const questions = [
+      { question: "Qual è il sogno di Roronoa Zoro?", answers: ["Diventare il Re dei Pirati", "Diventare il più grande spadaccino del mondo", "Diventare il capitano della ciurma", "Diventare un Ammiraglio della Marina"], correct: 1 },
+      { question: "Qual è il cibo preferito di Monkey D. Rufy?", answers: ["Pesce", "Riso", "Carne", "Ramen"], correct: 2 },
+      { question: "Qual è il vero ruolo di Tony Tony Chopper nella ciurma?", answers: ["Navigatore", "Carpentiere", "Medico", "Cuoco"], correct: 2 },
+      { question: "Qual è il ruolo di Nami nella ciurma di Rufy?", answers: ["Archeologa", "Navigatrice", "Cacciatrice di taglie", "Medico"], correct: 1 },
+      { question: "Qual è il ruolo di Sanji nella ciurma di Rufy?", answers: ["Navigatore", "Carpentiere", "Cuoco", "Medico"], correct: 2 },
+      { question: "Qual è il ruolo di Usopp nella ciurma?", answers: ["Spadaccino", "Cecchino", "Medico", "Navigatore"], correct: 1 },
+      { question: "Quante spade usa Zoro nel suo stile di combattimento?", answers: ["Una", "Due", "Tre", "Quattro"], correct: 2 }
     ];
 
+    let currentQuestion = 0;
+    let answering = false;
 
-    sentenceWords.forEach((word,index)=>{
+    function renderQuestion() {
+      answering = false;
+      const q = questions[currentQuestion];
+      document.getElementById('quizCounter').textContent = `DOMANDA ${currentQuestion + 1} / ${questions.length}`;
+      document.getElementById('quizProgressBar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+      document.getElementById('questionText').textContent = q.question;
 
-        const span =
-            document.createElement('span');
+      const container = document.getElementById('answers');
+      container.innerHTML = '';
+      document.getElementById('questionFeedback').textContent = '';
 
-
-        span.className='sentenceWord';
-
-
-        span.textContent=word;
-
-
-        span.style.animationDelay =
-            `${1.35 + (index * 0.10)}s`;
-
-
-        container.appendChild(span);
-
-
-        if(index < sentenceWords.length-1){
-
-            container.appendChild(
-                document.createTextNode(' ')
-            );
-
-        }
-
-    });
-
-}
-
-
-/* =========================================================
-   ENIGMA RISOLTO
-========================================================= */
-
-function puzzleSolved(){
-
-    if(puzzleFinished){
-        return;
+      q.answers.forEach((ans, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'answerButton';
+        btn.textContent = ans;
+        btn.onclick = () => selectAnswer(idx, btn, q.correct);
+        container.appendChild(btn);
+      });
     }
 
-    puzzleFinished=true;
+    function selectAnswer(idx, btn, correct) {
+      if (answering) return;
+      const feedback = document.getElementById('questionFeedback');
 
-    const area =
-        document.getElementById('answerArea');
+      if (idx === correct) {
+        answering = true;
+        btn.classList.add('correct');
+        playBeep(587.33, 'triangle', 0.25);
+        feedback.textContent = "⚔️ Esatto! Ben fatto, pirata!";
+        feedback.className = "questionFeedback success";
+        setTimeout(() => {
+          currentQuestion++;
+          if (currentQuestion < questions.length) {
+            renderQuestion();
+          } else {
+            showScreen('chestScreen', true);
+          }
+        }, 850);
+      } else {
+        btn.classList.add('wrong');
+        playBeep(180, 'sawtooth', 0.3);
+        feedback.textContent = "Non è quella giusta... Riprova!";
+        feedback.className = "questionFeedback error";
+        setTimeout(() => btn.classList.remove('wrong'), 550);
+      }
+    }
 
-    const words =
-        area.querySelectorAll('.word');
+    /* PUZZLE 3x3 */
+    let selectedPiece = null;
+    let boardState = Array(9).fill(null);
 
+    function initPuzzle() {
+      const board = document.getElementById('puzzleBoard');
+      const bank = document.getElementById('puzzleBank');
+      const container = document.getElementById('puzzleBoardContainer');
+      board.innerHTML = '';
+      bank.innerHTML = '';
+      bank.style.display = 'grid';
+      container.classList.remove('solved-container');
+      boardState = Array(9).fill(null);
+      selectedPiece = null;
+      document.getElementById('fullShipReveal').classList.remove('active');
+      document.getElementById('sparkleBurst').classList.remove('show');
+      document.getElementById('puzzleVictory').style.display = 'none';
+      document.getElementById('puzzleInstruction').textContent = 'Tocca un pezzo e poi tocca la casella giusta dove posizionarlo.';
 
-    words.forEach((word,index)=>{
+      for (let i = 0; i < 9; i++) {
+        const slot = document.createElement('div');
+        slot.className = 'boardSlot';
+        slot.dataset.slotIndex = i;
+        slot.textContent = i + 1;
+        slot.onclick = () => onSlotClick(i);
+        board.appendChild(slot);
+      }
 
-        setTimeout(()=>{
+      let pieces = [];
+      for (let i = 0; i < 9; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'puzzlePiece';
+        piece.dataset.pieceIndex = i;
 
-            word.classList.add('correctFlash');
+        const row = Math.floor(i / 3);
+        const col = i % 3;
+        piece.style.backgroundPosition = `-${col * 90}px -${row * 90}px`;
 
-        },index * 55);
+        piece.onclick = (e) => {
+          e.stopPropagation();
+          onPieceClick(piece);
+        };
+        pieces.push(piece);
+      }
 
-    });
+      pieces.sort(() => Math.random() - 0.5);
+      pieces.forEach(p => bank.appendChild(p));
+    }
 
+    function onPieceClick(piece) {
+      if (piece.dataset.locked === "true") return;
 
-    feedback.innerHTML =
-        '<b>Esatto... ❤️</b>';
+      if (piece.parentElement.classList.contains('boardSlot')) {
+        const slotIdx = parseInt(piece.parentElement.dataset.slotIndex);
+        boardState[slotIdx] = null;
+        piece.classList.remove('in-board', 'selected');
+        document.getElementById('puzzleBank').appendChild(piece);
+        if (selectedPiece === piece) selectedPiece = null;
+        playBeep(260, 'sine', 0.15);
+        return;
+      }
 
+      if (selectedPiece === piece) {
+        piece.classList.remove('selected');
+        selectedPiece = null;
+      } else {
+        if (selectedPiece) selectedPiece.classList.remove('selected');
+        selectedPiece = piece;
+        piece.classList.add('selected');
+        playBeep(440, 'triangle', 0.12);
+      }
+    }
 
-    document
-        .querySelectorAll('.word')
-        .forEach(word=>{
+    function onSlotClick(slotIndex) {
+      const slots = document.querySelectorAll('.boardSlot');
+      const targetSlot = slots[slotIndex];
 
-            word.style.pointerEvents='none';
+      if (!selectedPiece) return;
 
+      if (boardState[slotIndex] !== null) {
+        const oldPiece = targetSlot.querySelector('.puzzlePiece');
+        if (oldPiece && oldPiece.dataset.locked !== "true") {
+          oldPiece.classList.remove('in-board', 'selected');
+          document.getElementById('puzzleBank').appendChild(oldPiece);
+          boardState[slotIndex] = null;
+        } else {
+          return;
+        }
+      }
+
+      const pieceIndex = parseInt(selectedPiece.dataset.pieceIndex);
+      targetSlot.appendChild(selectedPiece);
+      selectedPiece.classList.remove('selected');
+      selectedPiece.classList.add('in-board');
+      boardState[slotIndex] = pieceIndex;
+
+      if (pieceIndex === slotIndex) {
+        selectedPiece.dataset.locked = "true";
+        selectedPiece.classList.add('correct-snap');
+        playBeep(659.25, 'sine', 0.2);
+      } else {
+        playBeep(330, 'triangle', 0.15);
+      }
+
+      selectedPiece = null;
+      checkPuzzleCompletion();
+    }
+
+    function checkPuzzleCompletion() {
+      const isComplete = boardState.every((val, idx) => val === idx);
+      if (isComplete) {
+        const bank = document.getElementById('puzzleBank');
+        bank.style.display = 'none';
+        document.getElementById('puzzleInstruction').textContent = 'La nave dei Pirati di Cappello di Paglia è intatta!';
+
+        setTimeout(() => {
+          playBeep(523.25, 'triangle', 0.15);
+          setTimeout(() => playBeep(659.25, 'triangle', 0.15), 140);
+          setTimeout(() => playBeep(783.99, 'triangle', 0.35), 280);
+
+          document.getElementById('puzzleBoardContainer').classList.add('solved-container');
+          document.getElementById('fullShipReveal').classList.add('active');
+          document.getElementById('sparkleBurst').classList.add('show');
+          
+          document.getElementById('puzzleVictory').style.display = 'block';
+        }, 300);
+      }
+    }
+
+    /* CRYPTEX COMBINAZIONE MAPPA */
+    const cryptexInputs = [];
+    for (let i = 0; i < 8; i++) {
+      const inp = document.getElementById(`c${i}`);
+      cryptexInputs.push(inp);
+
+      inp.addEventListener('input', () => {
+        inp.value = inp.value.replace(/\D/g, '');
+        if (inp.value && i < 7) {
+          cryptexInputs[i + 1].focus();
+        }
+        if (i === 7 && inp.value) {
+          verifyCryptexCode();
+        }
+      });
+
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !inp.value && i > 0) {
+          cryptexInputs[i - 1].focus();
+        }
+      });
+    }
+
+    function verifyCryptexCode() {
+      const code = cryptexInputs.map(input => input.value.trim()).join('');
+      const feedback = document.getElementById('cryptexFeedback');
+      const lock = document.getElementById('lockHasp');
+      const rollerL = document.getElementById('rollerLeft');
+      const rollerR = document.getElementById('rollerRight');
+      const mapContent = document.getElementById('scrollOpenedContent');
+      const title = document.getElementById('cryptexTitle');
+      const slots = document.getElementById('cryptexSlots');
+      const btn = document.getElementById('btnUnlockMap');
+
+      if (code === "14072025") {
+        lock.classList.add('shake-lock');
+        playBeep(440, 'triangle', 0.15);
+        setTimeout(() => playBeep(587, 'triangle', 0.15), 140);
+        setTimeout(() => playBeep(880, 'triangle', 0.35), 280);
+
+        feedback.className = "cryptexFeedback success";
+        feedback.textContent = "Meccanismo sbloccato!";
+        btn.style.display = 'none';
+
+        setTimeout(() => {
+          lock.classList.remove('shake-lock');
+          lock.classList.add('unlock-anim');
+        }, 400);
+
+        setTimeout(() => {
+          rollerL.style.transform = "translateX(-12px)";
+          rollerR.style.transform = "translateX(12px)";
+          title.style.display = 'none';
+          slots.style.display = 'none';
+          feedback.style.display = 'none';
+
+          mapContent.style.display = 'block';
+          setTimeout(() => mapContent.style.opacity = '1', 50);
+
+          setTimeout(() => {
+            openRoomGame();
+          }, 1800);
+        }, 1000);
+
+      } else {
+        playBeep(180, 'sawtooth', 0.3);
+        feedback.className = "cryptexFeedback error";
+        feedback.textContent = "Codice errato! Cerca bene sulla nave...";
+        setTimeout(() => feedback.classList.remove('error'), 500);
+      }
+    }
+
+    /* ROTTA STANZA CON CANVAS DINAMICO A TRATTEGGIO REALE */
+    let currentRouteStage = 0;
+    let canvas, ctx;
+    let animId = null;
+
+    const curvePoints = [
+      { p0: { x: 0, y: 0.05 }, cp: { x: 0.18, y: 0.12 }, p1: { x: 0.36, y: 0.22 } },
+      { p0: { x: 0.36, y: 0.22 }, cp: { x: 0.22, y: 0.30 }, p1: { x: 0.11, y: 0.41 } },
+      { p0: { x: 0.11, y: 0.41 }, cp: { x: 0.25, y: 0.56 }, p1: { x: 0.50, y: 0.62 } }
+    ];
+
+    let completedPaths = [];
+
+    function resizeCanvas() {
+      const container = document.getElementById('roomContainer');
+      const img = document.getElementById('roomImg');
+      if (!container || !canvas) return;
+
+      const w = container.clientWidth || (img ? img.clientWidth : 0);
+      const h = container.clientHeight || (img ? img.clientHeight : 0);
+
+      if (w > 0 && h > 0) {
+        canvas.width = w;
+        canvas.height = h;
+        redrawAllTrails();
+      }
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function redrawAllTrails() {
+      if (!ctx || !canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = '#e74c3c';
+      ctx.lineWidth = 2.4;
+      ctx.setLineDash([6, 6]);
+
+      completedPaths.forEach(curveIdx => {
+        const c = curvePoints[curveIdx];
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.beginPath();
+        ctx.moveTo(c.p0.x * w, c.p0.y * h);
+        ctx.quadraticCurveTo(c.cp.x * w, c.cp.y * h, c.p1.x * w, c.p1.y * h);
+        ctx.stroke();
+      });
+    }
+
+    function drawCurveProgressive(curveIdx, durationMs, onDone) {
+      const c = curvePoints[curveIdx];
+      const startTime = performance.now();
+
+      function quadratic(p0, cp, p1, t) {
+        return (1 - t) * (1 - t) * p0 + 2 * (1 - t) * t * cp + t * t * p1;
+      }
+
+      function render(now) {
+        const elapsed = now - startTime;
+        const tProgress = Math.min(elapsed / durationMs, 1);
+        const w = canvas.width;
+        const h = canvas.height;
+
+        redrawAllTrails();
+
+        ctx.strokeStyle = '#e74c3c';
+        ctx.lineWidth = 2.4;
+        ctx.setLineDash([6, 6]);
+        ctx.beginPath();
+        ctx.moveTo(c.p0.x * w, c.p0.y * h);
+
+        const steps = Math.floor(tProgress * 120);
+        for (let i = 1; i <= steps; i++) {
+          const t = (i / 120) * tProgress;
+          const x = quadratic(c.p0.x, c.cp.x, c.p1.x, t) * w;
+          const y = quadratic(c.p0.y, c.cp.y, c.p1.y, t) * h;
+          ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        if (tProgress < 1) {
+          animId = requestAnimationFrame(render);
+        } else {
+          completedPaths.push(curveIdx);
+          redrawAllTrails();
+          if (onDone) onDone();
+        }
+      }
+
+      if (animId) cancelAnimationFrame(animId);
+      animId = requestAnimationFrame(render);
+    }
+
+    function showPhotoMessage(emoji, text, duration = 3200) {
+      const box = document.getElementById('photoMessage');
+      document.getElementById('photoMessageEmoji').textContent = emoji;
+      document.getElementById('photoMessageText').innerHTML = text;
+      box.classList.add('show');
+      if (duration > 0) {
+        setTimeout(() => box.classList.remove('show'), duration);
+      }
+    }
+
+    function hidePhotoMessage() {
+      document.getElementById('photoMessage').classList.remove('show');
+    }
+
+    function initInteractiveRoomRoute() {
+      currentRouteStage = 0;
+      completedPaths = [];
+      canvas = document.getElementById('mapCanvas');
+      if (canvas) {
+        ctx = canvas.getContext('2d');
+        resizeCanvas();
+      }
+
+      document.getElementById('markX1').classList.remove('visible');
+      document.getElementById('markX2').classList.remove('visible');
+      document.getElementById('markX3').classList.remove('visible');
+      document.getElementById('treasureChest').classList.remove('show');
+      document.getElementById('patternLockBox').style.display = 'none';
+
+      const img = document.getElementById('roomImg');
+      if (img && !img.complete) {
+        img.onload = () => {
+          resizeCanvas();
+          startPathAnimation();
+        };
+      } else {
+        resizeCanvas();
+        startPathAnimation();
+      }
+    }
+
+    function startPathAnimation() {
+      setTimeout(() => {
+        resizeCanvas();
+        playBeep(392, 'sine', 0.2);
+        drawCurveProgressive(0, 3000, () => {
+          document.getElementById('markX1').classList.add('visible');
+          playBeep(523, 'triangle', 0.2);
+        });
+      }, 500);
+    }
+
+    function inspectMark(step) {
+      if (step === 1 && currentRouteStage === 0) {
+        currentRouteStage = 1;
+        playBeep(440, 'triangle', 0.15);
+        document.getElementById('markX1').style.opacity = '0.35';
+        showPhotoMessage('🖼️', 'Mi dispiace ma qui non c\'è nascosto niente...<br><b>Prova a cercare da qualche altra parte!</b>', 3200);
+
+        setTimeout(() => {
+          playBeep(440, 'sine', 0.2);
+          drawCurveProgressive(1, 3000, () => {
+            document.getElementById('markX2').classList.add('visible');
+            playBeep(587, 'triangle', 0.2);
+          });
+        }, 1800);
+
+      } else if (step === 2 && currentRouteStage === 1) {
+        currentRouteStage = 2;
+        playBeep(493, 'triangle', 0.15);
+        document.getElementById('markX2').style.opacity = '0.35';
+
+        showPhotoMessage(
+          '⚔️',
+          '<b>Zoro ha lasciato un indizio:</b><br><i>«Prova a cercare dove nascono i sogni... ma più in profondità.»</i>',
+          3500
+        );
+
+        setTimeout(() => {
+          playBeep(523, 'sine', 0.25);
+          drawCurveProgressive(2, 3000, () => {
+            document.getElementById('markX3').classList.add('visible');
+            playBeep(659, 'triangle', 0.3);
+          });
+        }, 1800);
+
+      } else if (step === 3 && currentRouteStage === 2) {
+        currentRouteStage = 3;
+        hidePhotoMessage();
+        playBeep(784, 'triangle', 0.35);
+
+        document.getElementById('roomImg').classList.add('zoomed');
+        document.getElementById('markX3').style.display = 'none';
+
+        setTimeout(() => {
+          document.getElementById('treasureChest').classList.add('show');
+          playBeep(523, 'triangle', 0.15);
+          setTimeout(() => playBeep(659, 'triangle', 0.15), 140);
+          setTimeout(() => playBeep(880, 'sine', 0.45), 280);
+          
+          showPhotoMessage(
+            '👑',
+            '<b>Complimenti, hai trovato il tesoro segreto di Zoro!</b><br><br>Ma controlla bene... perché di solito Zoro nasconde tanti segreti.',
+            5500
+          );
+        }, 850);
+
+        setTimeout(() => {
+          const lockBox = document.getElementById('patternLockBox');
+          lockBox.style.display = 'block';
+          lockBox.scrollIntoView({ behavior: 'smooth' });
+          initPatternLock();
+        }, 4800);
+      }
+    }
+
+    /* LOGICA DELLO SBLOCCO A TRASCINAMENTO (PATTERN LOCK) */
+    const CORRECT_PATTERN = [0, 1, 2, 4, 6, 7, 8];
+    let pCanvas, pCtx;
+    let isDrawingPattern = false;
+    let patternPoints = [];
+    let currentSelectedPattern = [];
+    let currentDragPos = { x: 0, y: 0 };
+    let patternSolved = false;
+
+    function initPatternLock() {
+      pCanvas = document.getElementById('patternCanvas');
+      pCtx = pCanvas.getContext('2d');
+      patternSolved = false;
+      currentSelectedPattern = [];
+      document.getElementById('patternFeedback').textContent = '';
+
+      patternPoints = [];
+      const size = 250;
+      const padding = 45;
+      const step = (size - padding * 2) / 2;
+
+      for (let r = 0; r < 3; r++) {
+        for (let c = 0; c < 3; c++) {
+          patternPoints.push({
+            id: r * 3 + c,
+            x: padding + c * step,
+            y: padding + r * step,
+            radius: 14
+          });
+        }
+      }
+
+      drawPatternState();
+
+      pCanvas.onpointerdown = handlePatternStart;
+      window.onpointermove = handlePatternMove;
+      window.onpointerup = handlePatternEnd;
+    }
+
+    function getCanvasCoords(e) {
+      const rect = pCanvas.getBoundingClientRect();
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+    }
+
+    function checkNodeHit(x, y) {
+      for (const pt of patternPoints) {
+        const dist = Math.hypot(pt.x - x, pt.y - y);
+        if (dist < pt.radius * 1.6) {
+          return pt.id;
+        }
+      }
+      return null;
+    }
+
+    function handlePatternStart(e) {
+      if (patternSolved) return;
+      isDrawingPattern = true;
+      currentSelectedPattern = [];
+      document.getElementById('patternFeedback').textContent = '';
+      
+      const pos = getCanvasCoords(e);
+      currentDragPos = pos;
+      const hit = checkNodeHit(pos.x, pos.y);
+      if (hit !== null) {
+        currentSelectedPattern.push(hit);
+        playBeep(440, 'sine', 0.1);
+      }
+      drawPatternState();
+    }
+
+    function handlePatternMove(e) {
+      if (!isDrawingPattern || patternSolved) return;
+      const pos = getCanvasCoords(e);
+      currentDragPos = pos;
+      const hit = checkNodeHit(pos.x, pos.y);
+      if (hit !== null && !currentSelectedPattern.includes(hit)) {
+        currentSelectedPattern.push(hit);
+        playBeep(440 + currentSelectedPattern.length * 50, 'sine', 0.1);
+      }
+      drawPatternState();
+    }
+
+    function handlePatternEnd() {
+      if (!isDrawingPattern || patternSolved) return;
+      isDrawingPattern = false;
+      drawPatternState();
+
+      if (currentSelectedPattern.length === 0) return;
+
+      const isMatch = currentSelectedPattern.length === CORRECT_PATTERN.length &&
+                      currentSelectedPattern.every((val, idx) => val === CORRECT_PATTERN[idx]);
+
+      const feedback = document.getElementById('patternFeedback');
+
+      if (isMatch) {
+        patternSolved = true;
+        feedback.className = "patternFeedback success";
+        feedback.textContent = "✨ Sigillo spezzato! Il forziere si apre...";
+        playBeep(523, 'triangle', 0.15);
+        setTimeout(() => playBeep(659, 'triangle', 0.15), 140);
+        setTimeout(() => playBeep(880, 'sine', 0.35), 280);
+        drawPatternState(true);
+
+        setTimeout(() => {
+          document.getElementById('riddleBox').style.display = 'block';
+          document.getElementById('riddleBox').scrollIntoView({ behavior: 'smooth' });
+          initSigilPuzzle();
+        }, 1200);
+
+      } else {
+        feedback.className = "patternFeedback error";
+        feedback.textContent = "Sequenza errata! Riprova a tracciarla...";
+        playBeep(180, 'sawtooth', 0.25);
+        drawPatternState(false, true);
+
+        setTimeout(() => {
+          currentSelectedPattern = [];
+          drawPatternState();
+        }, 700);
+      }
+    }
+
+    function drawPatternState(isSuccess = false, isError = false) {
+      if (!pCtx) return;
+      pCtx.clearRect(0, 0, 250, 250);
+
+      let lineColor = "#f1c40f";
+      if (isSuccess) lineColor = "#2ecc71";
+      if (isError) lineColor = "#e74c3c";
+
+      if (currentSelectedPattern.length > 0) {
+        pCtx.beginPath();
+        pCtx.strokeStyle = lineColor;
+        pCtx.lineWidth = 6;
+        pCtx.lineCap = "round";
+        pCtx.lineJoin = "round";
+
+        currentSelectedPattern.forEach((nodeId, idx) => {
+          const pt = patternPoints[nodeId];
+          if (idx === 0) pCtx.moveTo(pt.x, pt.y);
+          else pCtx.lineTo(pt.x, pt.y);
         });
 
+        if (isDrawingPattern) {
+          pCtx.lineTo(currentDragPos.x, currentDragPos.y);
+        }
+        pCtx.stroke();
+      }
 
-    setTimeout(()=>{
+      patternPoints.forEach(pt => {
+        const isSelected = currentSelectedPattern.includes(pt.id);
 
-        const riddle =
-            document.getElementById('riddleBox');
+        pCtx.beginPath();
+        pCtx.arc(pt.x, pt.y, isSelected ? 12 : 9, 0, Math.PI * 2);
+        pCtx.fillStyle = isSelected ? lineColor : "rgba(255, 255, 255, 0.45)";
+        pCtx.fill();
 
-        riddle.style.opacity='0';
-        riddle.style.transform='scale(.96)';
+        if (isSelected) {
+          pCtx.beginPath();
+          pCtx.arc(pt.x, pt.y, 22, 0, Math.PI * 2);
+          pCtx.strokeStyle = lineColor;
+          pCtx.lineWidth = 2.5;
+          pCtx.stroke();
+        }
+      });
+    }
 
-    },1100);
+    /* =====================================================
+       LOGICA DEI 4 SIGILLI SEGRETI
+       ===================================================== */
+    const SIGIL_STAGES = [
+      { target: "MIRACOLO", hint: "✨ Ricomponi il 1° Sigillo: sei il mio..." },
+      { target: "ANGELI",   hint: "👼 Ricomponi il 2° Sigillo: la voce degli..." },
+      { target: "AMORE",    hint: "❤️ Ricomponi il 3° Sigillo: il profumo dell'..." },
+      { target: "MUMIMESSO",hint: "👑 Ricomponi l'Ultimo Sigillo: la bellezza del..." }
+    ];
 
+    let currentSigilStage = 0;
+    let targetWord = "";
+    const slotRow = document.getElementById('letterSlotRow');
+    const bankRow = document.getElementById('letterBankRow');
+    const sigilFeedback = document.getElementById('sigilFeedback');
+    const sigilHint = document.getElementById('sigilHint');
 
-    setTimeout(()=>{
+    function initSigilPuzzle() {
+      currentSigilStage = 0;
+      loadSigilStage(0);
+    }
 
-        createAnimatedSentence();
+    function loadSigilStage(stageIdx) {
+      if (stageIdx >= SIGIL_STAGES.length) {
+        completeAllSigils();
+        return;
+      }
 
-        const reveal =
-            document.getElementById('sentenceReveal');
+      currentSigilStage = stageIdx;
+      targetWord = SIGIL_STAGES[stageIdx].target;
+      sigilHint.textContent = SIGIL_STAGES[stageIdx].hint;
+      sigilFeedback.textContent = "";
 
-        reveal.classList.add('show');
+      for (let i = 0; i < 4; i++) {
+        const slotEl = document.getElementById(`slot${i}`);
+        slotEl.classList.remove('active-slot');
+      }
+      const activeSlotEl = document.getElementById(`slot${stageIdx}`);
+      if (activeSlotEl && !activeSlotEl.classList.contains('unlocked')) {
+        activeSlotEl.classList.add('active-slot');
+      }
 
-    },1500);
+      slotRow.innerHTML = "";
+      bankRow.innerHTML = "";
 
+      let letters = targetWord.split('');
+      letters.sort(() => Math.random() - 0.5);
 
-    setTimeout(()=>{
+      letters.forEach((char) => {
+        const chip = document.createElement('div');
+        chip.className = 'letterChip';
+        chip.textContent = char;
+        chip.onclick = () => onLetterChipClick(chip);
+        bankRow.appendChild(chip);
+      });
+    }
 
-        const reveal =
-            document.getElementById('sentenceReveal');
+    function onLetterChipClick(chip) {
+      playBeep(440, 'triangle', 0.1);
+      if (chip.parentElement === bankRow) {
+        slotRow.appendChild(chip);
+      } else {
+        bankRow.appendChild(chip);
+      }
+      checkSigilWord();
+    }
 
-        reveal.classList.remove('show');
+    function undoSigilLetter() {
+      if (slotRow.children.length > 0) {
+        playBeep(330, 'sine', 0.1);
+        const last = slotRow.lastElementChild;
+        bankRow.appendChild(last);
+        checkSigilWord();
+      }
+    }
 
+    function resetSigilLetters() {
+      playBeep(260, 'sine', 0.15);
+      Array.from(slotRow.children).forEach(ch => bankRow.appendChild(ch));
+      sigilFeedback.textContent = "";
+    }
 
-        setTimeout(()=>{
+    function checkSigilWord() {
+      const spelled = Array.from(slotRow.children).map(c => c.textContent).join('');
 
-            document
-                .querySelector('.gameTitle')
-                .style.display='none';
+      if (spelled.length < targetWord.length) {
+        sigilFeedback.textContent = "";
+        return;
+      }
 
-            document
-                .querySelector('.room')
-                .style.display='none';
+      if (spelled === targetWord) {
+        playBeep(523, 'triangle', 0.12);
+        setTimeout(() => playBeep(659, 'triangle', 0.15), 100);
+        setTimeout(() => playBeep(880, 'sine', 0.3), 220);
 
+        sigilFeedback.style.color = "#2ecc71";
+        sigilFeedback.textContent = `✨ Sigillo spezzato: "${targetWord}"!`;
 
-            const riddle =
-                document.getElementById('riddleBox');
+        const slotEl = document.getElementById(`slot${currentSigilStage}`);
+        if (slotEl) {
+          slotEl.classList.remove('active-slot');
+          slotEl.classList.add('unlocked');
+          slotEl.textContent = targetWord.toLowerCase();
+        }
 
-            riddle.style.display='block';
-            riddle.style.opacity='1';
-            riddle.style.transform='none';
+        setTimeout(() => {
+          loadSigilStage(currentSigilStage + 1);
+        }, 1000);
 
+      } else {
+        playBeep(180, 'sawtooth', 0.25);
+        sigilFeedback.style.color = "#e74c3c";
+        sigilFeedback.textContent = "Qualcosa non torna... riprova a ricomporla.";
+      }
+    }
 
-            riddle.querySelector('h3').style.display='none';
-            riddle.querySelector('.riddleIntro').style.display='none';
-            riddle.querySelector('.answerTitle').style.display='none';
-            riddle.querySelector('#answerArea').style.display='none';
-            riddle.querySelector('.wordsTitle').style.display='none';
-            riddle.querySelector('#wordBank').style.display='none';
-            riddle.querySelector('#riddleFeedback').style.display='none';
+    /* =====================================================
+       RIVELAZIONE SPETTACOLARE PAROLA DOPO PAROLA
+       ===================================================== */
+    const grandWords = [
+      "sei", "il", "mio", "miracolo", "con", "la", "voce", "degli", "angeli,",
+      "con", "il", "profumo", "dell'amore", "e", "la", "bellezza", "del", "mumimesso", "❤️"
+    ];
 
+    function completeAllSigils() {
+      document.querySelector('.sigilSolverCard').style.display = 'none';
 
-            const finalClue =
-                document.getElementById('finalClue');
+      const modal = document.getElementById('sentenceReveal');
+      const container = document.getElementById('wordStream');
+      const btnNext = document.getElementById('btnGrandClue');
+      container.innerHTML = "";
+      btnNext.classList.remove('active');
 
-            finalClue.style.display='block';
-            finalClue.style.position='relative';
-            finalClue.style.left='auto';
-            finalClue.style.top='auto';
-            finalClue.style.transform='none';
-            finalClue.style.width='100%';
-            finalClue.style.maxWidth='none';
-            finalClue.style.margin='0';
+      modal.classList.add('show');
 
+      // Animazione della frase: parola per parola
+      grandWords.forEach((word, idx) => {
+        setTimeout(() => {
+          const span = document.createElement('span');
+          span.className = "revealWord";
+          if (word === "miracolo" || word === "dell'amore" || word === "mumimesso" || word === "❤️") {
+            span.classList.add('special');
+          }
+          span.textContent = word;
+          container.appendChild(span);
 
-            finalClue.scrollIntoView({
-                behavior:'smooth',
-                block:'center'
-            });
+          // Suono armonico per ogni parola che si accende
+          playBeep(400 + (idx * 28), 'triangle', 0.15);
 
-        },850);
+          if (idx === grandWords.length - 1) {
+            setTimeout(() => {
+              playBeep(523.25, 'triangle', 0.2);
+              setTimeout(() => playBeep(659.25, 'triangle', 0.2), 150);
+              setTimeout(() => playBeep(1046.50, 'sine', 0.5), 300);
+              btnNext.classList.add('active');
+            }, 500);
+          }
+        }, idx * 180);
+      });
+    }
 
-    },9200);
-
-}
-
-</script>
-
+    function showFinalClueScreen() {
+      document.getElementById('sentenceReveal').classList.remove('show');
+      showScreen('finalScreen', true);
+      playBeep(523, 'sine', 0.4);
+      setTimeout(() => playBeep(784, 'sine', 0.6), 250);
+    }
+  </script>
 </body>
 </html>
