@@ -644,9 +644,7 @@
       line-height: 1.55;
     }
 
-    /* =====================================================
-       STANZA MAPPA DEL TESORO & CANVAS TRATTEGGIATO
-       ===================================================== */
+    /* STANZA MAPPA DEL TESORO */
     .treasureMapFrame {
       position: relative;
       width: 100%;
@@ -899,7 +897,7 @@
       75% { transform: translateX(6px); }
     }
 
-    /* ENIGMA: LA PERGAMENA DEI 4 SIGILLI */
+    /* ENIGMA DEI 4 SIGILLI */
     .riddle {
       display: none;
       margin-top: 20px;
@@ -1047,9 +1045,7 @@
       margin-top: 10px;
     }
 
-    /* =====================================================
-       GRAN FINALE SPETTACOLARE: FRASE OLOGRAFICA & INDIZIO
-       ===================================================== */
+    /* GRAN FINALE SPETTACOLARE */
     #sentenceReveal {
       position: fixed;
       inset: 0;
@@ -1172,7 +1168,7 @@
       animation: pulseGlow 2.5s infinite;
     }
 
-    /* SCHERMATA FINALE: L'INDIZIO DELLO SPECCHIO */
+    /* SCHERMATA FINALE SPECCHIO */
     #finalScreen {
       text-align: center;
       justify-content: center;
@@ -1245,7 +1241,6 @@
       margin-top: 14px;
       font-size: 15px;
     }
-
   </style>
 </head>
 <body>
@@ -1448,7 +1443,7 @@
       <div class="patternFeedback" id="patternFeedback"></div>
     </div>
 
-    <!-- ENIGMA: LA PERGAMENA DEI 4 SIGILLI -->
+    <!-- ENIGMA DEI 4 SIGILLI -->
     <div id="riddleBox" class="riddle">
       <h3 style="margin-top: 0; color: #f1c40f;">I 4 Sigilli del Cuore 📜</h3>
       <p style="color: #bbb; font-size: 13.5px; margin-bottom: 14px;">La pergamena è protetta da 4 parole sigillate.<br>Ricomponi le lettere per spezzare ogni sigillo.</p>
@@ -1489,7 +1484,7 @@
     </div>
   </div>
 
-  <!-- SCHERMATA FINALE: L'INDIZIO DELLO SPECCHIO -->
+  <!-- SCHERMATA FINALE SPECCHIO -->
   <section class="screen" id="finalScreen">
     <div class="finalMirrorStage">
       <div class="mirrorOrb">🪞</div>
@@ -1505,19 +1500,48 @@
   </section>
 
   <script>
-    /* SUONI BEEP */
+    /* =====================================================
+       GESTIONE AUDIO OTTIMIZZATA PER IPHONE & ANDROID
+       ===================================================== */
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    // Sblocca il contesto audio al primo tocco
+    window.addEventListener('touchstart', () => { getAudioContext(); }, { once: true });
+    window.addEventListener('click', () => { getAudioContext(); }, { once: true });
+
     function playBeep(freq, type, duration) {
       try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const ctx = getAudioContext();
+        if (!ctx) return;
+
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
+
         osc.type = type;
-        osc.frequency.value = freq;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+
+        // Curva morbida per evitare gracchiature o distorsioni su altoparlanti mobile
+        gain.gain.setValueAtTime(0.18, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+
         osc.connect(gain);
         gain.connect(ctx.destination);
-        osc.start();
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
-        setTimeout(() => ctx.close(), duration * 1000 + 100);
+
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + duration);
       } catch(e) {}
     }
 
@@ -2229,9 +2253,7 @@
       });
     }
 
-    /* =====================================================
-       LOGICA DEI 4 SIGILLI SEGRETI
-       ===================================================== */
+    /* LOGICA DEI 4 SIGILLI SEGRETI */
     const SIGIL_STAGES = [
       { target: "MIRACOLO", hint: "✨ Ricomponi il 1° Sigillo: sei il mio..." },
       { target: "ANGELI",   hint: "👼 Ricomponi il 2° Sigillo: la voce degli..." },
@@ -2345,9 +2367,7 @@
       }
     }
 
-    /* =====================================================
-       RIVELAZIONE SPETTACOLARE PAROLA DOPO PAROLA
-       ===================================================== */
+    /* RIVELAZIONE PAROLA PER PAROLA */
     const grandWords = [
       "sei", "il", "mio", "miracolo", "con", "la", "voce", "degli", "angeli,",
       "con", "il", "profumo", "dell'amore", "e", "la", "bellezza", "del", "mumimesso", "❤️"
@@ -2364,7 +2384,6 @@
 
       modal.classList.add('show');
 
-      // Animazione della frase: parola per parola
       grandWords.forEach((word, idx) => {
         setTimeout(() => {
           const span = document.createElement('span');
@@ -2375,7 +2394,6 @@
           span.textContent = word;
           container.appendChild(span);
 
-          // Suono armonico per ogni parola che si accende
           playBeep(400 + (idx * 28), 'triangle', 0.15);
 
           if (idx === grandWords.length - 1) {
