@@ -1263,7 +1263,7 @@
       <div class="introText">
         <p>Hai trovato qualcosa<br>che non doveva essere trovato...</p>
         <p class="introWarning">Ma il tesoro non sarà<br>così facile da ottenere.</p>
-        <p class="introChallenge">Se vuoi scoprire cosa si nasconde qui dentro,<br>dovrai dimostrare di essere degna di trovarlo.</p>
+        <p class="introChallenge">Se vuoi scoprire cosa si nasconde qui dentro,<br>dovrai dimostrare di meritare questo tesoro.</p>
       </div>
       <button class="btn-action" id="btnStartGame" onclick="goToChallenge()">INIZIA LA SFIDA</button>
     </div>
@@ -1275,7 +1275,7 @@
     <div class="challengeNumber">SFIDA N. 1</div>
     <div class="challengeContent">
       <h1>Conosci davvero la ciurma di<br>Monkey D. Rufy?</h1>
-      <p class="challengeQuestion">Dimostralo rispondendo alle domande e dimostra di essere degna di continuare la ricerca del tesoro.</p>
+      <p class="challengeQuestion">Dimostralo rispondendo alle domande e dimostra di avere la stoffa per continuare la rotta.</p>
       <button class="btn-action" onclick="startQuiz()">COMINCIA LA SFIDA</button>
     </div>
   </section>
@@ -1518,7 +1518,6 @@
       return audioCtx;
     }
 
-    // Sblocca il contesto audio al primo tocco
     window.addEventListener('touchstart', () => { getAudioContext(); }, { once: true });
     window.addEventListener('click', () => { getAudioContext(); }, { once: true });
 
@@ -1533,7 +1532,6 @@
         osc.type = type;
         osc.frequency.setValueAtTime(freq, ctx.currentTime);
 
-        // Curva morbida per evitare gracchiature o distorsioni su altoparlanti mobile
         gain.gain.setValueAtTime(0.18, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
 
