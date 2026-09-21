@@ -23,12 +23,34 @@
       position: relative;
     }
 
+    /* PULSANTE MUSICA */
+    #musicToggleBtn {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 10000;
+      background: rgba(20, 15, 25, 0.85);
+      border: 1px solid rgba(241, 196, 15, 0.55);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 19px;
+      color: #fff;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      outline: none;
+    }
+
     /* FENDENTE DI SPADA DI ZORO */
     #zoroSlashOverlay {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 99999;
       opacity: 0;
     }
 
@@ -54,7 +76,7 @@
 
     @keyframes slashAnim {
       0% { opacity: 0; background: rgba(46, 204, 113, 0); }
-      35% { opacity: 1; background: rgba(46, 204, 113, 0.18); }
+      35% { opacity: 1; background: rgba(46, 204, 113, 0.2); }
       100% { opacity: 0; background: rgba(0, 0, 0, 0); }
     }
 
@@ -64,7 +86,7 @@
       100% { transform: translateY(-50%) rotate(-32deg) scaleX(1.1); opacity: 0; }
     }
 
-    /* Transizione morbida generale tra schermate */
+    /* Schermate */
     .screen {
       width: 100%;
       max-width: 520px;
@@ -86,7 +108,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* INTRO CON DISSOLVENZA SCENICA A STRATI */
+    /* INTRO */
     #introScreen {
       background: radial-gradient(circle at 50% 40%, rgba(90,55,120,.24) 0%, rgba(18,15,22,.98) 60%, #08070a 100%);
       overflow: hidden;
@@ -197,7 +219,7 @@
 
     .btn-action:active { transform: scale(.96); }
 
-    /* SFIDA */
+    /* SFIDA QUIZ */
     #challengeScreen {
       text-align: center;
       background: radial-gradient(circle at 50% 42%, rgba(100,65,130,.18), rgba(18,15,22,.98) 65%);
@@ -273,14 +295,14 @@
     .questionFeedback.success { color: #b8f5c2; }
     .questionFeedback.error { color: #ffb0b7; }
 
-    /* FORZIERE */
+    /* TRANSIZIONE POST QUIZ: RIPARARE LA NAVE */
     #chestScreen {
       background: radial-gradient(circle at center, rgba(110,70,145,.25), rgba(18,15,22,.98) 65%);
       text-align: center;
     }
 
     .chestIcon { font-size: 70px; margin-bottom: 12px; }
-    .chestTitle { margin: 10px 0 16px; font-size: 28px; }
+    .chestTitle { margin: 10px 0 16px; font-size: 26px; }
     .chestText { max-width: 400px; margin: 0 auto; color: #ddd; font-size: 15px; line-height: 1.6; }
 
     /* PUZZLE GOING MERRY */
@@ -451,7 +473,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* MAPPA SCENOGRAFICA & CRYPTEX */
+    /* CRYPTEX MAPPA BLOCCATA */
     #mapLockScreen {
       text-align: center;
       padding-top: 20px;
@@ -644,16 +666,82 @@
       line-height: 1.55;
     }
 
-    /* STANZA MAPPA DEL TESORO */
-    .treasureMapFrame {
+    /* =====================================================
+       STANZA MAPPA: STILE SEA OF THIEVES
+       ===================================================== */
+    .seaOfThievesWrapper {
       position: relative;
       width: 100%;
-      overflow: hidden;
+      margin-top: 14px;
       border-radius: 20px;
       border: 3px solid #7c4b24;
-      box-shadow: 0 15px 45px rgba(0,0,0,.75), inset 0 0 30px rgba(0,0,0,.85);
+      box-shadow: 0 15px 45px rgba(0,0,0,.8), inset 0 0 30px rgba(0,0,0,.9);
+      background: #120d16;
+      overflow: hidden;
+    }
+
+    .mapColsHeader {
+      display: flex;
+      margin-left: 28px;
+      height: 26px;
+      background: #251620;
+      border-bottom: 2px solid #7c4b24;
+    }
+
+    .mapColLetter {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: #f1c40f;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      border-right: 1px solid rgba(241, 196, 15, 0.2);
+    }
+
+    .mapColLetter:last-child {
+      border-right: none;
+    }
+
+    .mapMainBody {
+      display: flex;
+      position: relative;
+      width: 100%;
+    }
+
+    .mapRowsSidebar {
+      width: 28px;
+      background: #251620;
+      border-right: 2px solid #7c4b24;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    .mapRowNumber {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: #f1c40f;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      border-bottom: 1px solid rgba(241, 196, 15, 0.2);
+    }
+
+    .mapRowNumber:last-child {
+      border-bottom: none;
+    }
+
+    .treasureMapFrame {
+      position: relative;
+      flex-grow: 1;
+      overflow: hidden;
       background: #1a141e;
-      margin-top: 14px;
     }
 
     .mapParchmentOverlay {
@@ -667,12 +755,12 @@
 
     .compassRose {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 24px;
-      opacity: 0.6;
+      top: 8px;
+      right: 8px;
+      font-size: 22px;
+      opacity: 0.55;
       pointer-events: none;
-      z-index: 4;
+      z-index: 15;
       filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
     }
 
@@ -693,71 +781,196 @@
 
     .room img.zoomed { transform: scale(2.8); }
 
-    #mapCanvas {
+    #navGridOverlay {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 6;
-      pointer-events: none;
+      z-index: 8;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(8, 1fr);
     }
 
-    /* Punti X interattivi */
-    .mapMarkX {
-      position: absolute;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #e74c3c;
-      font-size: 24px;
-      font-weight: 900;
-      transform: translate(-50%, -50%) scale(0);
-      z-index: 12;
+    .gridCell {
+      border-right: 1px dashed rgba(241, 196, 15, 0.22);
+      border-bottom: 1px dashed rgba(241, 196, 15, 0.22);
+      position: relative;
       cursor: pointer;
-      border: 0;
+      user-select: none;
+      transition: background-color 0.25s;
+    }
+
+    .gridCell:nth-child(6n) { border-right: none; }
+    .gridCell:nth-last-child(-n+6) { border-bottom: none; }
+
+    .gridCell:active {
+      background-color: rgba(241, 196, 15, 0.25);
+    }
+
+    .gridCell.solved-coord {
+      background-color: rgba(46, 204, 113, 0.24);
+      box-shadow: inset 0 0 10px rgba(46, 204, 113, 0.35);
+    }
+
+    /* La casella del tesoro D5 è completamente invisibile / stealth */
+    .gridCell.treasure-cell {
+      cursor: default;
+    }
+
+    .gridCell.treasure-cell.unlocked-final {
+      cursor: pointer;
+      /* Assolutamente nessun risalto grafico */
+    }
+
+    /* DIARIO DI BORDO FISSO DELLE 3 PAROLE SOTTO LA MAPPA */
+    .foundWordsLogBox {
+      width: 100%;
+      margin: 14px auto 0;
+      padding: 14px 14px 12px;
+      background: linear-gradient(145deg, rgba(34, 24, 40, 0.96), rgba(18, 13, 23, 0.98));
+      border: 1.5px solid rgba(241, 196, 15, 0.35);
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    }
+
+    .foundWordsLogHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .foundWordsLogTitle {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #f1c40f;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .reopenClueBtn {
       background: transparent;
-      padding: 0;
-      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.9));
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(241, 196, 15, 0.4);
+      border-radius: 8px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #f1c40f;
+      cursor: pointer;
+      display: none;
     }
 
-    .mapMarkX.visible {
-      transform: translate(-50%, -50%) scale(1);
-      animation: xGlowTap 1.6s infinite alternate;
+    .foundWordsBadgesRow {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
     }
 
-    @keyframes xGlowTap {
-      0% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 0 4px #e74c3c); }
-      100% { transform: translate(-50%, -50%) scale(1.22); filter: drop-shadow(0 0 10px #f1c40f); color: #f1c40f; }
+    .foundWordBadge {
+      flex: 1;
+      text-align: center;
+      padding: 8px 4px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      font-size: 12px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.35);
+      letter-spacing: 1px;
+      transition: all 0.4s ease;
     }
 
-    #markX1 { left: 36%; top: 22%; }
-    #markX2 { left: 11%; top: 41%; }
-    #markX3 { left: 50%; top: 62%; }
+    .foundWordBadge.active {
+      background: linear-gradient(145deg, rgba(46, 204, 113, 0.25), rgba(39, 174, 96, 0.4));
+      border: 1px solid #2ecc71;
+      color: #b8f5c2;
+      box-shadow: 0 0 12px rgba(46, 204, 113, 0.35);
+    }
 
+    .logHintInstruction {
+      font-size: 12px;
+      line-height: 1.45;
+      color: #bbb;
+      margin: 0;
+      text-align: center;
+    }
+
+    .logHintInstruction.ready {
+      color: #f1c40f;
+      font-weight: 700;
+    }
+
+    /* TOAST RAPIDO DI FEEDBACK (NON USATO PER L'INDIZIO FINALE) */
     .photoMessage {
       position: absolute;
       left: 50%;
-      top: 32%;
+      top: 35%;
       transform: translate(-50%,-50%) scale(.85);
-      width: 88%;
+      width: 90%;
       padding: 16px;
-      background: rgba(20,15,25,.95);
-      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(20,15,25,.96);
+      border: 1px solid rgba(241,196,15,.35);
       border-radius: 18px;
       text-align: center;
       z-index: 30;
       opacity: 0;
       pointer-events: none;
       transition: all 0.35s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,.8);
+      box-shadow: 0 10px 30px rgba(0,0,0,.85);
     }
 
     .photoMessage.show {
       opacity: 1;
       transform: translate(-50%,-50%) scale(1);
+    }
+
+    /* MODALE PERSISTENTE PER LE 3 PAROLE: NON SCOMPARE MAI A TEMPO */
+    #wordsClueModal {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(8, 7, 12, 0.94);
+      backdrop-filter: blur(10px);
+    }
+
+    #wordsClueModal.show {
+      display: flex;
+      animation: modalFadeIn 0.5s ease-out forwards;
+    }
+
+    .wordsClueCard {
+      width: 100%;
+      max-width: 440px;
+      padding: 28px 20px;
+      border-radius: 26px;
+      background: linear-gradient(160deg, #2b1836, #140d1b);
+      border: 2px solid #f1c40f;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.95), 0 0 45px rgba(241, 196, 15, 0.45);
+      text-align: center;
+      position: relative;
+    }
+
+    .wordsTrioBox {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 18px 0;
+    }
+
+    .trioItem {
+      flex: 1;
+      background: rgba(0,0,0,0.5);
+      border: 1.5px solid #2ecc71;
+      border-radius: 10px;
+      padding: 10px 4px;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #f1c40f;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(241,196,15,0.6);
     }
 
     /* Forziere pirata dorato */
@@ -880,6 +1093,7 @@
       font-size: 14px;
       font-weight: 700;
       margin-top: 12px;
+      line-height: 1.4;
     }
 
     .patternFeedback.error {
@@ -891,22 +1105,38 @@
       color: #2ecc71;
     }
 
-    @keyframes patternShake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      75% { transform: translateX(6px); }
-    }
-
-    /* ENIGMA DEI 4 SIGILLI */
+    /* ENIGMA DEI 4 SIGILLI: LA PERGAMENA DELL'AMORE NEL FORZIERE */
     .riddle {
       display: none;
       margin-top: 20px;
       background: linear-gradient(145deg, #241b29, #17131c);
-      border: 1px solid rgba(241,196,15,.35);
+      border: 1.5px solid rgba(241,196,15,.45);
       border-radius: 20px;
       padding: 22px 16px;
       text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,.5);
+      box-shadow: 0 15px 45px rgba(0,0,0,.6), 0 0 25px rgba(241,196,15,0.15);
+      animation: screenFadeIn 0.8s ease forwards;
+    }
+
+    .chestStoryBadge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(241, 196, 15, 0.15);
+      border: 1px solid rgba(241, 196, 15, 0.4);
+      color: #f1c40f;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .riddleIntroText {
+      color: #ddd;
+      font-size: 13.5px;
+      line-height: 1.55;
+      margin: 0 0 16px;
     }
 
     .parchmentBox {
@@ -1011,9 +1241,7 @@
       transition: transform 0.15s, background 0.2s;
     }
 
-    .letterChip:active {
-      transform: scale(0.92);
-    }
+    .letterChip:active { transform: scale(0.92); }
 
     .letterSlotRow .letterChip {
       background: linear-gradient(145deg, #9b5de5, #6c3483);
@@ -1049,7 +1277,7 @@
     #sentenceReveal {
       position: fixed;
       inset: 0;
-      z-index: 1000;
+      z-index: 100000;
       display: none;
       align-items: center;
       justify-content: center;
@@ -1245,6 +1473,12 @@
 </head>
 <body>
 
+  <!-- SOTTOFONDO MUSICALE PIRATA -->
+  <audio id="bgMusic" src="pirate-theme.mp3" loop preload="auto"></audio>
+
+  <!-- PULSANTE AUDIO IN ALTO A DESTRA -->
+  <button id="musicToggleBtn" onclick="toggleBackgroundMusic()" aria-label="Audio">🔊</button>
+
   <!-- Fendente Spada Zoro -->
   <div id="zoroSlashOverlay">
     <div class="slashBlade"></div>
@@ -1263,20 +1497,20 @@
       <div class="introText">
         <p>Hai trovato qualcosa<br>che non doveva essere trovato...</p>
         <p class="introWarning">Ma il tesoro non sarà<br>così facile da ottenere.</p>
-        <p class="introChallenge">Se vuoi scoprire cosa si nasconde qui dentro,<br>dovrai dimostrare di meritare questo tesoro.</p>
+        <p class="introChallenge">Zoro deve capire se hai davvero la stoffa<br>per meritare il suo tesoro più prezioso.</p>
       </div>
-      <button class="btn-action" id="btnStartGame" onclick="goToChallenge()">INIZIA LA SFIDA</button>
+      <button class="btn-action" id="btnStartGame" onclick="goToChallenge()">DIMOSTRA IL TUO VALORE</button>
     </div>
   </main>
 
   <!-- PRESENTAZIONE SFIDA -->
   <section class="screen" id="challengeScreen">
     <div class="challengeIcon">⚔️</div>
-    <div class="challengeNumber">SFIDA N. 1</div>
+    <div class="challengeNumber">PROVA DI FEDELTÀ</div>
     <div class="challengeContent">
       <h1>Conosci davvero la ciurma di<br>Monkey D. Rufy?</h1>
-      <p class="challengeQuestion">Dimostralo rispondendo alle domande e dimostra di avere la stoffa per continuare la rotta.</p>
-      <button class="btn-action" onclick="startQuiz()">COMINCIA LA SFIDA</button>
+      <p class="challengeQuestion">Solo chi conosce ogni dettaglio della ciurma ha il diritto di proseguire nella ricerca del forziere segreto.</p>
+      <button class="btn-action" onclick="startQuiz()">INIZIA LA PROVA</button>
     </div>
   </section>
 
@@ -1296,29 +1530,26 @@
     </div>
   </section>
 
-  <!-- FORZIERE TROVATO -->
+  <!-- PONTE TRA QUIZ E PUZZLE -->
   <section class="screen" id="chestScreen">
-    <div class="chestIcon">🏆</div>
-    <div class="challengeNumber">SFIDA N. 1 COMPLETATA</div>
-    <h1 class="chestTitle">SFIDA SUPERATA!</h1>
+    <div class="chestIcon">⛵</div>
+    <div class="challengeNumber">PROVA SUPERATA</div>
+    <h1 class="chestTitle">HAI IL MIO RISPETTO</h1>
     <div class="chestText">
-      <p>Hai dimostrato di conoscere la ciurma di Monkey D. Rufy.</p>
-      <p>Ma la tua vera avventura comincia solo adesso...</p>
-      <p style="margin-top: 18px; color: #fff; font-weight: 700;">Hai trovato qualcosa di incredibile.</p>
-      <p>Zoro custodiva con cura un <strong>forziere segreto</strong>, nascosto lontano da occhi indiscreti.</p>
-      <p>Ma c'è un problema... <strong>Il forziere è chiuso.</strong></p>
-      <p>Per aprirlo dovrai risolvere l'enigma che Zoro ha lasciato per te.</p>
-      <p><strong>Riuscirai ad aprirlo?</strong></p>
+      <p>Hai dimostrato di conoscere la ciurma fino in fondo.</p>
+      <p>Ma prima di condurti al mio tesoro, <strong>devi fare un'ultima cosa per me</strong>.</p>
+      <p style="margin-top: 18px; color: #fff; font-weight: 700;">Durante l'ultima tempesta la Going Merry si è danneggiata gravemente.</p>
+      <p>Nessun vero pirata abbandona la propria nave. <strong>Dobbiamo ripararla prima di salpare verso la rotta segreta!</strong></p>
     </div>
-    <button class="btn-action" onclick="startPuzzle()">RISOLVI L'ENIGMA</button>
+    <button class="btn-action" onclick="startPuzzle()">RIPARA LA NAVE 🛠️</button>
   </section>
 
   <!-- PUZZLE DELLA GOING MERRY -->
   <section class="screen" id="puzzleScreen">
     <div class="puzzleHeader" id="puzzleHeader">
-      <div class="challengeNumber">SFIDA N. 2</div>
+      <div class="challengeNumber">CANTIERE NAVALE</div>
       <h2>Ricostruisci la Going Merry ⛵</h2>
-      <p id="puzzleInstruction">Tocca un pezzo e poi tocca la casella giusta dove posizionarlo.</p>
+      <p id="puzzleInstruction">Tocca un frammento e riposizionalo nella giusta posizione dello scafo.</p>
     </div>
 
     <div class="puzzleBoardContainer" id="puzzleBoardContainer">
@@ -1336,17 +1567,17 @@
     <div class="puzzleBank" id="puzzleBank"></div>
 
     <div class="puzzleVictory" id="puzzleVictory">
-      <h3 style="color: #f1c40f; margin: 10px 0 4px; font-size: 20px;">✨ LA GOING MERRY È TORNATA! ✨</h3>
-      <p style="margin: 0; color: #ddd; font-size: 14px; line-height: 1.4;">Il sigillo è rotto! All'interno del forziere c'è qualcosa...</p>
-      <button class="btn-action" onclick="openMapLock()">APRI IL FORZIERE 🗝️</button>
+      <h3 style="color: #f1c40f; margin: 10px 0 4px; font-size: 20px;">✨ LA NAVE È SALVA! ✨</h3>
+      <p style="margin: 0; color: #ddd; font-size: 14px; line-height: 1.4;">Zoro può finalmente darti la mappa... ma il sigillo è bloccato!</p>
+      <button class="btn-action" onclick="openMapLock()">PRENDI LA MAPPA 🗺️</button>
     </div>
   </section>
 
-  <!-- MAPPA DEL TESORO SIGILLATA DA CRYPTEX -->
+  <!-- CRYPTEX MAPPA BLOCCATA -->
   <section class="screen" id="mapLockScreen">
-    <div class="challengeNumber">IL SIGILLO DEL FORZIERE</div>
-    <h2 style="margin: 0 0 6px; font-size: 24px;">Mappa del Tesoro 🗺️</h2>
-    <p style="margin: 0 0 14px; color: #bbb; font-size: 14px;">La pergamena è protetta da un meccanismo a cifre.</p>
+    <div class="challengeNumber">IL MECCANISMO A COMBINAZIONE</div>
+    <h2 style="margin: 0 0 6px; font-size: 24px;">Mappa Sigillata 🗺️</h2>
+    <p style="margin: 0 0 14px; color: #bbb; font-size: 14px;">La pergamena è protetta da un codice a 8 cifre.</p>
 
     <div class="mapStage">
       <div class="scrollWrapper" id="scrollWrapper">
@@ -1379,57 +1610,126 @@
 
     <div class="mapClueBox">
       💡 <b>Indizio di Zoro:</b><br>
-      <i>«Dove potrebbe nascondersi il codice? Forse Zoro ha fatto riparare la nave per un motivo... controlliamo lì.»</i>
+      <i>«Non ti ho fatto riparare la nave a caso... C'è un motivo. Il codice segreto e le rotte della mappa si nascondono proprio sulla <b>VERA nave</b>. Cercala nel tuo mondo!»</i>
     </div>
   </section>
 
-  <!-- GIOCO DELLA STANZA / MAPPA DEL TESORO -->
+  <!-- GIOCO DELLA STANZA IN STILE SEA OF THIEVES -->
   <section class="screen" id="gameScreen">
     <div style="text-align: center;">
-      <h2 style="margin: 0 0 4px;">La Rotta nella Stanza 🧭</h2>
-      <p id="roomHeaderHint" style="margin: 0; color: #f1c40f; font-size: 14px; font-weight: 600;">Segui il tracciato e tocca la X per cercare...</p>
+      <h2 style="margin: 0 0 4px;">La Rotta della Stanza 🧭</h2>
+      <p id="roomHeaderHint" style="margin: 0; color: #f1c40f; font-size: 13.5px; font-weight: 600;">Esplora le coordinate segnate sul diario di bordo:</p>
     </div>
 
-    <div class="treasureMapFrame">
-      <div class="mapParchmentOverlay"></div>
-      <div class="compassRose">🧭</div>
+    <div class="seaOfThievesWrapper">
+      <!-- Header Colonne: A-F -->
+      <div class="mapColsHeader">
+        <div class="mapColLetter">A</div>
+        <div class="mapColLetter">B</div>
+        <div class="mapColLetter">C</div>
+        <div class="mapColLetter">D</div>
+        <div class="mapColLetter">E</div>
+        <div class="mapColLetter">F</div>
+      </div>
 
-      <div class="room" id="roomContainer">
-        <img id="roomImg" src="stanza.jpeg" alt="La stanza">
-
-        <canvas id="mapCanvas"></canvas>
-
-        <button id="markX1" class="mapMarkX" aria-label="Quadro" onclick="inspectMark(1)">✖</button>
-        <button id="markX2" class="mapMarkX" aria-label="Comodino" onclick="inspectMark(2)">✖</button>
-        <button id="markX3" class="mapMarkX" aria-label="Sotto il letto" onclick="inspectMark(3)">✖</button>
-
-        <div id="photoMessage" class="photoMessage">
-          <div id="photoMessageEmoji" style="font-size: 30px; margin-bottom: 6px;"></div>
-          <div id="photoMessageText" style="font-size: 15px; line-height: 1.5; color: #ddd;"></div>
+      <div class="mapMainBody">
+        <!-- Sidebar Righe: 1-8 -->
+        <div class="mapRowsSidebar">
+          <div class="mapRowNumber">1</div>
+          <div class="mapRowNumber">2</div>
+          <div class="mapRowNumber">3</div>
+          <div class="mapRowNumber">4</div>
+          <div class="mapRowNumber">5</div>
+          <div class="mapRowNumber">6</div>
+          <div class="mapRowNumber">7</div>
+          <div class="mapRowNumber">8</div>
         </div>
 
-        <div id="treasureChest" class="chestAnimationContainer">
-          <div class="goldenSunburst"></div>
-          <svg class="chestSvgGraphic" viewBox="0 0 100 85">
-            <ellipse cx="50" cy="40" rx="35" ry="18" fill="url(#goldShine)" filter="drop-shadow(0 0 8px #fff)" />
-            <path d="M15,40 L85,40 L78,75 L22,75 Z" fill="#5c2c16" stroke="#d4af37" stroke-width="2.5" />
-            <path d="M26,40 L24,75 M74,40 L76,75" stroke="#d4af37" stroke-width="2.5" />
-            <path d="M12,40 Q50,15 88,40 Q50,26 12,40 Z" fill="#7a3e1d" stroke="#f1c40f" stroke-width="2.5" />
-            <rect x="46" y="42" width="8" height="11" rx="2" fill="#f1c40f" stroke="#b8860b" stroke-width="1" />
-            <circle cx="50" cy="46" r="1.5" fill="#333" />
-            <circle cx="42" cy="38" r="4" fill="#ffd700" stroke="#b8860b" stroke-width="1" />
-            <circle cx="56" cy="37" r="4.5" fill="#ffd700" stroke="#b8860b" stroke-width="1" />
-            <circle cx="49" cy="34" r="4" fill="#fff" filter="drop-shadow(0 0 4px #ffd700)" />
-            <polygon points="50,29 53,35 47,35" fill="#e74c3c" />
-            <defs>
-              <radialGradient id="goldShine" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#ffffff" />
-                <stop offset="40%" stop-color="#f1c40f" stop-opacity="0.9" />
-                <stop offset="100%" stop-color="#e67e22" stop-opacity="0" />
-              </radialGradient>
-            </defs>
-          </svg>
+        <div class="treasureMapFrame">
+          <div class="mapParchmentOverlay"></div>
+          <div class="compassRose">🧭</div>
+
+          <div class="room" id="roomContainer">
+            <img id="roomImg" src="stanza.jpeg" alt="La stanza">
+
+            <!-- Griglia interattiva Sea of Thieves -->
+            <div id="navGridOverlay"></div>
+
+            <!-- Toast per i singoli click -->
+            <div id="photoMessage" class="photoMessage">
+              <div id="photoMessageEmoji" style="font-size: 30px; margin-bottom: 6px;"></div>
+              <div id="photoMessageText" style="font-size: 15px; line-height: 1.5; color: #ddd;"></div>
+            </div>
+
+            <div id="treasureChest" class="chestAnimationContainer">
+              <div class="goldenSunburst"></div>
+              <svg class="chestSvgGraphic" viewBox="0 0 100 85">
+                <ellipse cx="50" cy="40" rx="35" ry="18" fill="url(#goldShine)" filter="drop-shadow(0 0 8px #fff)" />
+                <path d="M15,40 L85,40 L78,75 L22,75 Z" fill="#5c2c16" stroke="#d4af37" stroke-width="2.5" />
+                <path d="M26,40 L24,75 M74,40 L76,75" stroke="#d4af37" stroke-width="2.5" />
+                <path d="M12,40 Q50,15 88,40 Q50,26 12,40 Z" fill="#7a3e1d" stroke="#f1c40f" stroke-width="2.5" />
+                <rect x="46" y="42" width="8" height="11" rx="2" fill="#f1c40f" stroke="#b8860b" stroke-width="1" />
+                <circle cx="50" cy="46" r="1.5" fill="#333" />
+                <circle cx="42" cy="38" r="4" fill="#ffd700" stroke="#b8860b" stroke-width="1" />
+                <circle cx="56" cy="37" r="4.5" fill="#ffd700" stroke="#b8860b" stroke-width="1" />
+                <circle cx="49" cy="34" r="4" fill="#fff" filter="drop-shadow(0 0 4px #ffd700)" />
+                <polygon points="50,29 53,35 47,35" fill="#e74c3c" />
+                <defs>
+                  <radialGradient id="goldShine" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#ffffff" />
+                    <stop offset="40%" stop-color="#f1c40f" stop-opacity="0.9" />
+                    <stop offset="100%" stop-color="#e67e22" stop-opacity="0" />
+                  </radialGradient>
+                </defs>
+              </svg>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- DIARIO DI BORDO FISSO DELLE 3 PAROLE SOTTO LA MAPPA -->
+    <div class="foundWordsLogBox" id="foundWordsLogBox">
+      <div class="foundWordsLogHeader">
+        <span class="foundWordsLogTitle">⚔️ FRAMMENTI DI ROTTA RACCOLTI</span>
+        <button id="btnReopenClue" class="reopenClueBtn" onclick="openWordsClueModal()">📜 Rileggi Indizio</button>
+      </div>
+      <div class="foundWordsBadgesRow">
+        <div class="foundWordBadge" id="badgeD2">D2: ???</div>
+        <div class="foundWordBadge" id="badgeA4">A4: ???</div>
+        <div class="foundWordBadge" id="badgeB6">B6: ???</div>
+      </div>
+      <p id="logInstructionText" class="logHintInstruction">
+        Esplora le 3 coordinate segnate sulla vera nave per raccogliere tutti i frammenti.
+      </p>
+    </div>
+
+    <!-- MODALE DEDICATO PERSISTENTE: NON SCOMPARE MAI FINCHÉ NON SI PREME IL TASTO -->
+    <div id="wordsClueModal">
+      <div class="wordsClueCard">
+        <div style="font-size: 44px; margin-bottom: 6px;">📜✨</div>
+        <div class="grandBadge">L'INDIZIO DI ZORO È COMPLETO</div>
+        <h3 style="margin: 4px 0 14px; color: #fff; font-size: 21px;">I Tre Frammenti di Rotta</h3>
+        
+        <p style="color: #ddd; font-size: 15px; line-height: 1.5; margin: 0;">
+          Hai trovato tutte le parole nascoste nei settori della mappa:
+        </p>
+
+        <div class="wordsTrioBox">
+          <div class="trioItem">RIPOSO</div>
+          <div class="trioItem">SOGNI</div>
+          <div class="trioItem">BUIO</div>
+        </div>
+
+        <p style="color: #f1c40f; font-size: 15px; line-height: 1.6; margin: 16px 0 24px; font-weight: 600;">
+          Metti insieme queste 3 parole...<br>
+          <i>A quale luogo della stanza conducono?</i><br>
+          <b>Tocca quel punto esatto sulla mappa per stanare il forziere!</b>
+        </p>
+
+        <button class="btn-action" style="margin: 0 auto; max-width: 280px; padding: 14px 20px;" onclick="closeWordsClueModal()">
+          HO CAPITO, CERCO SULLA MAPPA 🧭
+        </button>
       </div>
     </div>
 
@@ -1443,10 +1743,14 @@
       <div class="patternFeedback" id="patternFeedback"></div>
     </div>
 
-    <!-- ENIGMA DEI 4 SIGILLI -->
+    <!-- ENIGMA DEI 4 SIGILLI: LA PERGAMENA DELL'AMORE NEL FORZIERE -->
     <div id="riddleBox" class="riddle">
-      <h3 style="margin-top: 0; color: #f1c40f;">I 4 Sigilli del Cuore 📜</h3>
-      <p style="color: #bbb; font-size: 13.5px; margin-bottom: 14px;">La pergamena è protetta da 4 parole sigillate.<br>Ricomponi le lettere per spezzare ogni sigillo.</p>
+      <div class="chestStoryBadge">✨ IL CONTENUTO DEL FORZIERE ✨</div>
+      <h3 style="margin-top: 4px; margin-bottom: 8px; color: #f1c40f; font-size: 22px;">La Pergamena dell'Amore 📜❤️</h3>
+      <p class="riddleIntroText">
+        Il forziere si è spalancato! Oltre al tesoro, Zoro vi ha custodito un antico rotolo d'amore protetto da <b>4 sigilli del cuore</b>.<br>
+        Ricomponi le lettere per spezzare ogni sigillo e svelare il suo messaggio segreto.
+      </p>
 
       <div class="parchmentBox">
         sei il mio <span id="slot0" class="sealedSlot active-slot">[ 1. SIGILLO ]</span><br>
@@ -1500,10 +1804,10 @@
   </section>
 
   <script>
-    /* =====================================================
-       GESTIONE AUDIO OTTIMIZZATA PER IPHONE & ANDROID
-       ===================================================== */
+    /* AUDIO ENGINE OTTIMIZZATO PER IPHONE / ANDROID */
     let audioCtx = null;
+    const bgMusic = document.getElementById('bgMusic');
+    let isMusicPlaying = false;
 
     function getAudioContext() {
       if (!audioCtx) {
@@ -1516,6 +1820,29 @@
         audioCtx.resume();
       }
       return audioCtx;
+    }
+
+    function playBackgroundMusic() {
+      if (bgMusic && !isMusicPlaying) {
+        bgMusic.volume = 0.28;
+        bgMusic.play().then(() => {
+          isMusicPlaying = true;
+          document.getElementById('musicToggleBtn').textContent = '🔊';
+        }).catch(() => {});
+      }
+    }
+
+    function toggleBackgroundMusic() {
+      const btn = document.getElementById('musicToggleBtn');
+      if (!bgMusic) return;
+
+      if (bgMusic.paused) {
+        bgMusic.play();
+        btn.textContent = '🔊';
+      } else {
+        bgMusic.pause();
+        btn.textContent = '🔇';
+      }
     }
 
     window.addEventListener('touchstart', () => { getAudioContext(); }, { once: true });
@@ -1582,6 +1909,7 @@
     }
 
     function goToChallenge() {
+      playBackgroundMusic();
       showScreen('challengeScreen', true);
     }
 
@@ -1607,11 +1935,10 @@
     function openRoomGame() { 
       showScreen('gameScreen', true);
       setTimeout(() => {
-        initInteractiveRoomRoute();
+        initRoomGridGame();
       }, 250);
     }
 
-    /* QUIZ DATA */
     const questions = [
       { question: "Qual è il sogno di Roronoa Zoro?", answers: ["Diventare il Re dei Pirati", "Diventare il più grande spadaccino del mondo", "Diventare il capitano della ciurma", "Diventare un Ammiraglio della Marina"], correct: 1 },
       { question: "Qual è il cibo preferito di Monkey D. Rufy?", answers: ["Pesce", "Riso", "Carne", "Ramen"], correct: 2 },
@@ -1672,7 +1999,6 @@
       }
     }
 
-    /* PUZZLE 3x3 */
     let selectedPiece = null;
     let boardState = Array(9).fill(null);
 
@@ -1689,7 +2015,7 @@
       document.getElementById('fullShipReveal').classList.remove('active');
       document.getElementById('sparkleBurst').classList.remove('show');
       document.getElementById('puzzleVictory').style.display = 'none';
-      document.getElementById('puzzleInstruction').textContent = 'Tocca un pezzo e poi tocca la casella giusta dove posizionarlo.';
+      document.getElementById('puzzleInstruction').textContent = 'Tocca un frammento e riposizionalo nella giusta posizione dello scafo.';
 
       for (let i = 0; i < 9; i++) {
         const slot = document.createElement('div');
@@ -1785,7 +2111,7 @@
       if (isComplete) {
         const bank = document.getElementById('puzzleBank');
         bank.style.display = 'none';
-        document.getElementById('puzzleInstruction').textContent = 'La nave dei Pirati di Cappello di Paglia è intatta!';
+        document.getElementById('puzzleInstruction').textContent = 'La nave dei Pirati di Cappello di Paglia è pronta a salpare!';
 
         setTimeout(() => {
           playBeep(523.25, 'triangle', 0.15);
@@ -1801,7 +2127,6 @@
       }
     }
 
-    /* CRYPTEX COMBINAZIONE MAPPA */
     const cryptexInputs = [];
     for (let i = 0; i < 8; i++) {
       const inp = document.getElementById(`c${i}`);
@@ -1868,220 +2193,213 @@
       } else {
         playBeep(180, 'sawtooth', 0.3);
         feedback.className = "cryptexFeedback error";
-        feedback.textContent = "Codice errato! Cerca bene sulla nave...";
+        feedback.textContent = "Codice errato! Cerca bene sulla VERA nave...";
         setTimeout(() => feedback.classList.remove('error'), 500);
       }
     }
 
-    /* ROTTA STANZA CON CANVAS DINAMICO A TRATTEGGIO REALE */
-    let currentRouteStage = 0;
-    let canvas, ctx;
-    let animId = null;
+    const COLS = ['A', 'B', 'C', 'D', 'E', 'F'];
+    const ROWS = [1, 2, 3, 4, 5, 6, 7, 8];
 
-    const curvePoints = [
-      { p0: { x: 0, y: 0.05 }, cp: { x: 0.18, y: 0.12 }, p1: { x: 0.36, y: 0.22 } },
-      { p0: { x: 0.36, y: 0.22 }, cp: { x: 0.22, y: 0.30 }, p1: { x: 0.11, y: 0.41 } },
-      { p0: { x: 0.11, y: 0.41 }, cp: { x: 0.25, y: 0.56 }, p1: { x: 0.50, y: 0.62 } }
-    ];
-
-    let completedPaths = [];
-
-    function resizeCanvas() {
-      const container = document.getElementById('roomContainer');
-      const img = document.getElementById('roomImg');
-      if (!container || !canvas) return;
-
-      const w = container.clientWidth || (img ? img.clientWidth : 0);
-      const h = container.clientHeight || (img ? img.clientHeight : 0);
-
-      if (w > 0 && h > 0) {
-        canvas.width = w;
-        canvas.height = h;
-        redrawAllTrails();
-      }
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-
-    function redrawAllTrails() {
-      if (!ctx || !canvas) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = '#e74c3c';
-      ctx.lineWidth = 2.4;
-      ctx.setLineDash([6, 6]);
-
-      completedPaths.forEach(curveIdx => {
-        const c = curvePoints[curveIdx];
-        const w = canvas.width;
-        const h = canvas.height;
-        ctx.beginPath();
-        ctx.moveTo(c.p0.x * w, c.p0.y * h);
-        ctx.quadraticCurveTo(c.cp.x * w, c.cp.y * h, c.p1.x * w, c.p1.y * h);
-        ctx.stroke();
-      });
-    }
-
-    function drawCurveProgressive(curveIdx, durationMs, onDone) {
-      const c = curvePoints[curveIdx];
-      const startTime = performance.now();
-
-      function quadratic(p0, cp, p1, t) {
-        return (1 - t) * (1 - t) * p0 + 2 * (1 - t) * t * cp + t * t * p1;
-      }
-
-      function render(now) {
-        const elapsed = now - startTime;
-        const tProgress = Math.min(elapsed / durationMs, 1);
-        const w = canvas.width;
-        const h = canvas.height;
-
-        redrawAllTrails();
-
-        ctx.strokeStyle = '#e74c3c';
-        ctx.lineWidth = 2.4;
-        ctx.setLineDash([6, 6]);
-        ctx.beginPath();
-        ctx.moveTo(c.p0.x * w, c.p0.y * h);
-
-        const steps = Math.floor(tProgress * 120);
-        for (let i = 1; i <= steps; i++) {
-          const t = (i / 120) * tProgress;
-          const x = quadratic(c.p0.x, c.cp.x, c.p1.x, t) * w;
-          const y = quadratic(c.p0.y, c.cp.y, c.p1.y, t) * h;
-          ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        if (tProgress < 1) {
-          animId = requestAnimationFrame(render);
-        } else {
-          completedPaths.push(curveIdx);
-          redrawAllTrails();
-          if (onDone) onDone();
-        }
-      }
-
-      if (animId) cancelAnimationFrame(animId);
-      animId = requestAnimationFrame(render);
-    }
+    let foundWords = {
+      D2: false,
+      A4: false,
+      B6: false
+    };
+    let bedUnlocked = false;
+    let toastTimeout = null;
 
     function showPhotoMessage(emoji, text, duration = 3200) {
       const box = document.getElementById('photoMessage');
+      if (toastTimeout) clearTimeout(toastTimeout);
       document.getElementById('photoMessageEmoji').textContent = emoji;
       document.getElementById('photoMessageText').innerHTML = text;
       box.classList.add('show');
       if (duration > 0) {
-        setTimeout(() => box.classList.remove('show'), duration);
+        toastTimeout = setTimeout(() => box.classList.remove('show'), duration);
       }
     }
 
     function hidePhotoMessage() {
+      if (toastTimeout) clearTimeout(toastTimeout);
       document.getElementById('photoMessage').classList.remove('show');
     }
 
-    function initInteractiveRoomRoute() {
-      currentRouteStage = 0;
-      completedPaths = [];
-      canvas = document.getElementById('mapCanvas');
-      if (canvas) {
-        ctx = canvas.getContext('2d');
-        resizeCanvas();
-      }
+    function initRoomGridGame() {
+      foundWords = { D2: false, A4: false, B6: false };
+      bedUnlocked = false;
 
-      document.getElementById('markX1').classList.remove('visible');
-      document.getElementById('markX2').classList.remove('visible');
-      document.getElementById('markX3').classList.remove('visible');
+      const gridOverlay = document.getElementById('navGridOverlay');
+      gridOverlay.innerHTML = '';
+      document.getElementById('roomImg').classList.remove('zoomed');
       document.getElementById('treasureChest').classList.remove('show');
       document.getElementById('patternLockBox').style.display = 'none';
+      document.getElementById('btnReopenClue').style.display = 'none';
+      document.getElementById('wordsClueModal').classList.remove('show');
+      document.getElementById('roomHeaderHint').textContent = "Esplora le coordinate segnate sul diario di bordo:";
 
-      const img = document.getElementById('roomImg');
-      if (img && !img.complete) {
-        img.onload = () => {
-          resizeCanvas();
-          startPathAnimation();
-        };
-      } else {
-        resizeCanvas();
-        startPathAnimation();
+      // Reset badge parole
+      document.getElementById('badgeD2').className = 'foundWordBadge';
+      document.getElementById('badgeD2').textContent = 'D2: ???';
+      document.getElementById('badgeA4').className = 'foundWordBadge';
+      document.getElementById('badgeA4').textContent = 'A4: ???';
+      document.getElementById('badgeB6').className = 'foundWordBadge';
+      document.getElementById('badgeB6').textContent = 'B6: ???';
+
+      const instr = document.getElementById('logInstructionText');
+      instr.className = 'logHintInstruction';
+      instr.textContent = 'Esplora le 3 coordinate segnate sulla vera nave per raccogliere tutti i frammenti.';
+
+      for (let r = 1; r <= 8; r++) {
+        for (let c = 0; c < 6; c++) {
+          const coordId = `${COLS[c]}${r}`;
+          const cell = document.createElement('div');
+          cell.className = 'gridCell';
+          cell.dataset.coord = coordId;
+
+          if (coordId === 'D5') {
+            cell.classList.add('treasure-cell');
+          }
+
+          cell.onclick = () => onGridCellClick(coordId, cell);
+          gridOverlay.appendChild(cell);
+        }
       }
     }
 
-    function startPathAnimation() {
-      setTimeout(() => {
-        resizeCanvas();
-        playBeep(392, 'sine', 0.2);
-        drawCurveProgressive(0, 3000, () => {
-          document.getElementById('markX1').classList.add('visible');
+    function onGridCellClick(coord, cellEl) {
+      if (coord === 'D2') {
+        if (!foundWords.D2) {
+          foundWords.D2 = true;
+          cellEl.classList.add('solved-coord');
+          const badge = document.getElementById('badgeD2');
+          badge.classList.add('active');
+          badge.textContent = 'D2: RIPOSO';
           playBeep(523, 'triangle', 0.2);
-        });
-      }, 500);
+          showPhotoMessage('📜', 'Hai esaminato il settore <b>D2</b>!<br>Non c\'è il tesoro, ma trovi una parola incisa:<br><b style="color:#f1c40f; font-size:18px;">« RIPOSO »</b>', 2800);
+          checkAllCoordinatesFound();
+        } else {
+          showPhotoMessage('📜', 'Hai già esplorato <b>D2</b>.<br>Parola registrata: <b>« RIPOSO »</b>', 2000);
+        }
+        return;
+      }
+
+      if (coord === 'A4') {
+        if (!foundWords.A4) {
+          foundWords.A4 = true;
+          cellEl.classList.add('solved-coord');
+          const badge = document.getElementById('badgeA4');
+          badge.classList.add('active');
+          badge.textContent = 'A4: SOGNI';
+          playBeep(587, 'triangle', 0.2);
+          showPhotoMessage('📜', 'Hai esaminato il settore <b>A4</b>!<br>Non c\'è il forziere, ma trovi una pergamena:<br><b style="color:#f1c40f; font-size:18px;">« SOGNI »</b>', 2800);
+          checkAllCoordinatesFound();
+        } else {
+          showPhotoMessage('📜', 'Hai già esplorato <b>A4</b>.<br>Parola registrata: <b>« SOGNI »</b>', 2000);
+        }
+        return;
+      }
+
+      if (coord === 'B6') {
+        if (!foundWords.B6) {
+          foundWords.B6 = true;
+          cellEl.classList.add('solved-coord');
+          const badge = document.getElementById('badgeB6');
+          badge.classList.add('active');
+          badge.textContent = 'B6: BUIO';
+          playBeep(659, 'triangle', 0.25);
+          showPhotoMessage('📜', 'Hai esaminato il settore <b>B6</b>!<br>C\'è un frammento che recita:<br><b style="color:#f1c40f; font-size:18px;">« BUIO »</b>', 2800);
+          checkAllCoordinatesFound();
+        } else {
+          showPhotoMessage('📜', 'Hai già esplorato <b>B6</b>.<br>Parola registrata: <b>« BUIO »</b>', 2000);
+        }
+        return;
+      }
+
+      if (coord === 'D5') {
+        if (!bedUnlocked) {
+          playBeep(180, 'sawtooth', 0.25);
+          showPhotoMessage('🔒', 'Questo settore è ancora sigillato da Zoro!<br>Trova prima tutte le parole indicate sulla vera nave.', 2500);
+          return;
+        }
+
+        triggerBedTreasureDiscovery();
+        return;
+      }
+
+      playBeep(220, 'sine', 0.12);
+      showPhotoMessage('🌊', `Settore <b>${coord}</b>: nulla in vista...<br>Controlla bene il diario di bordo sulla nave!`, 2000);
     }
 
-    function inspectMark(step) {
-      if (step === 1 && currentRouteStage === 0) {
-        currentRouteStage = 1;
-        playBeep(440, 'triangle', 0.15);
-        document.getElementById('markX1').style.opacity = '0.35';
-        showPhotoMessage('🖼️', 'Mi dispiace ma qui non c\'è nascosto niente...<br><b>Prova a cercare da qualche altra parte!</b>', 3200);
+    function checkAllCoordinatesFound() {
+      if (foundWords.D2 && foundWords.A4 && foundWords.B6 && !bedUnlocked) {
+        bedUnlocked = true;
 
         setTimeout(() => {
-          playBeep(440, 'sine', 0.2);
-          drawCurveProgressive(1, 3000, () => {
-            document.getElementById('markX2').classList.add('visible');
-            playBeep(587, 'triangle', 0.2);
-          });
-        }, 1800);
-
-      } else if (step === 2 && currentRouteStage === 1) {
-        currentRouteStage = 2;
-        playBeep(493, 'triangle', 0.15);
-        document.getElementById('markX2').style.opacity = '0.35';
-
-        showPhotoMessage(
-          '⚔️',
-          '<b>Zoro ha lasciato un indizio:</b><br><i>«Prova a cercare dove nascono i sogni... ma più in profondità.»</i>',
-          3500
-        );
-
-        setTimeout(() => {
-          playBeep(523, 'sine', 0.25);
-          drawCurveProgressive(2, 3000, () => {
-            document.getElementById('markX3').classList.add('visible');
-            playBeep(659, 'triangle', 0.3);
-          });
-        }, 1800);
-
-      } else if (step === 3 && currentRouteStage === 2) {
-        currentRouteStage = 3;
-        hidePhotoMessage();
-        playBeep(784, 'triangle', 0.35);
-
-        document.getElementById('roomImg').classList.add('zoomed');
-        document.getElementById('markX3').style.display = 'none';
-
-        setTimeout(() => {
-          document.getElementById('treasureChest').classList.add('show');
           playBeep(523, 'triangle', 0.15);
           setTimeout(() => playBeep(659, 'triangle', 0.15), 140);
-          setTimeout(() => playBeep(880, 'sine', 0.45), 280);
-          
-          showPhotoMessage(
-            '👑',
-            '<b>Complimenti, hai trovato il tesoro segreto di Zoro!</b><br><br>Ma controlla bene... perché di solito Zoro nasconde tanti segreti.',
-            5500
-          );
-        }, 850);
+          setTimeout(() => playBeep(784, 'triangle', 0.35), 280);
 
-        setTimeout(() => {
-          const lockBox = document.getElementById('patternLockBox');
-          lockBox.style.display = 'block';
-          lockBox.scrollIntoView({ behavior: 'smooth' });
-          initPatternLock();
-        }, 4800);
+          // Sblocca la cella D5 senza evidenziazione visiva
+          const targetCell = document.querySelector('.gridCell[data-coord="D5"]');
+          if (targetCell) {
+            targetCell.classList.add('unlocked-final');
+          }
+
+          document.getElementById('roomHeaderHint').textContent = "Tutte le parole trovate! Tocca il settore corretto sulla mappa:";
+          
+          const instr = document.getElementById('logInstructionText');
+          instr.className = 'logHintInstruction ready';
+          instr.innerHTML = '✨ <b>Indizio Completo!</b> Unisci <i>Riposo, Sogni, Buio</i> e tocca il punto corretto sulla mappa!';
+          
+          document.getElementById('btnReopenClue').style.display = 'inline-block';
+
+          // Nascondi eventuali toast e apri il modale persistente senza timer
+          hidePhotoMessage();
+          openWordsClueModal();
+        }, 1200);
       }
     }
 
-    /* LOGICA DELLO SBLOCCO A TRASCINAMENTO (PATTERN LOCK) */
+    function openWordsClueModal() {
+      const modal = document.getElementById('wordsClueModal');
+      modal.classList.add('show');
+    }
+
+    function closeWordsClueModal() {
+      const modal = document.getElementById('wordsClueModal');
+      modal.classList.remove('show');
+      playBeep(440, 'triangle', 0.1);
+    }
+
+    function triggerBedTreasureDiscovery() {
+      hidePhotoMessage();
+      playBeep(784, 'triangle', 0.35);
+
+      document.getElementById('roomImg').classList.add('zoomed');
+      document.getElementById('navGridOverlay').style.display = 'none';
+
+      setTimeout(() => {
+        document.getElementById('treasureChest').classList.add('show');
+        playBeep(523, 'triangle', 0.15);
+        setTimeout(() => playBeep(659, 'triangle', 0.15), 140);
+        setTimeout(() => playBeep(880, 'sine', 0.45), 280);
+        
+        showPhotoMessage(
+          '👑',
+          '<b>Complimenti, hai trovato il tesoro segreto di Zoro!</b><br><br>Ma controlla bene... perché di solito Zoro nasconde tanti segreti.',
+          5500
+        );
+      }, 850);
+
+      setTimeout(() => {
+        const lockBox = document.getElementById('patternLockBox');
+        lockBox.style.display = 'block';
+        lockBox.scrollIntoView({ behavior: 'smooth' });
+        initPatternLock();
+      }, 4800);
+    }
+
     const CORRECT_PATTERN = [0, 1, 2, 4, 6, 7, 8];
     let pCanvas, pCtx;
     let isDrawingPattern = false;
@@ -2181,17 +2499,18 @@
       if (isMatch) {
         patternSolved = true;
         feedback.className = "patternFeedback success";
-        feedback.textContent = "✨ Sigillo spezzato! Il forziere si apre...";
+        feedback.innerHTML = "✨ <b>IL FORZIERE SI È APERTO!</b><br>Al suo interno non c'è solo il tesoro... Zoro ha nascosto una <b>Pergamena dell'Amore</b>!";
         playBeep(523, 'triangle', 0.15);
         setTimeout(() => playBeep(659, 'triangle', 0.15), 140);
         setTimeout(() => playBeep(880, 'sine', 0.35), 280);
         drawPatternState(true);
 
         setTimeout(() => {
-          document.getElementById('riddleBox').style.display = 'block';
-          document.getElementById('riddleBox').scrollIntoView({ behavior: 'smooth' });
+          const rBox = document.getElementById('riddleBox');
+          rBox.style.display = 'block';
+          rBox.scrollIntoView({ behavior: 'smooth' });
           initSigilPuzzle();
-        }, 1200);
+        }, 1300);
 
       } else {
         feedback.className = "patternFeedback error";
@@ -2251,7 +2570,6 @@
       });
     }
 
-    /* LOGICA DEI 4 SIGILLI SEGRETI */
     const SIGIL_STAGES = [
       { target: "MIRACOLO", hint: "✨ Ricomponi il 1° Sigillo: sei il mio..." },
       { target: "ANGELI",   hint: "👼 Ricomponi il 2° Sigillo: la voce degli..." },
@@ -2365,7 +2683,6 @@
       }
     }
 
-    /* RIVELAZIONE PAROLA PER PAROLA */
     const grandWords = [
       "sei", "il", "mio", "miracolo", "con", "la", "voce", "degli", "angeli,",
       "con", "il", "profumo", "dell'amore", "e", "la", "bellezza", "del", "mumimesso", "❤️"
